@@ -1,9 +1,14 @@
 """KV cache 최적화 기술 다관점(시장성·도메인 적용) 평가 — LangGraph Multi-Agent + Agentic RAG.
 실행: python app.py  →  outputs/ 에 보고서 MD·PDF, review.md, trace.json, graph.mmd 생성."""
 import operator
+from functools import partial
 from typing import Annotated, TypedDict
 
 from langgraph.graph import END, START, StateGraph
+
+from agents.report import report_reviewer, report_writer, route_review, save_outputs, synthesis
+from agents.research import domain_eval, market_eval, tech_research
+from rag.pipeline import ROOT
 
 # ---------------------------------------------------------------- 입력 (Human 기반 기술 선정: Doc Pool 에서 진영별 1개 직접 선택)
 TECHNOLOGIES = {
@@ -49,9 +54,6 @@ class State(TypedDict, total=False):
 
 
 def build_graph():
-    from agents.report import report_reviewer, report_writer, route_review, save_outputs, synthesis
-    from agents.research import domain_eval, market_eval, tech_research
-
     g = StateGraph(State)
     g.add_node("tech_research", tech_research)
     g.add_node("market_eval", market_eval)
@@ -59,21 +61,20 @@ def build_graph():
     g.add_node("synthesis", synthesis)
     g.add_node("report_writer", report_writer)
     g.add_node("report_reviewer", report_reviewer)
-    g.add_node("save_outputs", save_outputs)
+    g.add_node("save_outputs", partial(save_outputs, author=AUTHOR))  # 설정은 app.py 한 곳에서 주입
     g.add_edge(START, "tech_research")
     g.add_edge("tech_research", "market_eval")  # fan-out
     g.add_edge("tech_research", "domain_eval")
     g.add_edge(["market_eval", "domain_eval"], "synthesis")  # fan-in
     g.add_edge("synthesis", "report_writer")
     g.add_edge("report_writer", "report_reviewer")
-    g.add_conditional_edges("report_reviewer", route_review,
+    g.add_conditional_edges("report_reviewer", partial(route_review, max_revision=MAX_REPORT_REVISION),
                             {"revise": "report_writer", "approve": "save_outputs", "unverified": "save_outputs"})
     g.add_edge("save_outputs", END)
     return g.compile()
 
 
 def main():
-    from rag.pipeline import ROOT
     app = build_graph()
     (ROOT / "outputs").mkdir(exist_ok=True)
     (ROOT / "outputs/graph.mmd").write_text(app.get_graph().draw_mermaid())

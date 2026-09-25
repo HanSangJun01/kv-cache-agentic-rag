@@ -186,17 +186,16 @@ def report_reviewer(state: dict) -> dict:
     return {"review": {"passed": not critical, "critical": critical, "minor": verdict.minor, "pages": pages}}
 
 
-def route_review(state: dict) -> str:
-    """Branch: approve / revise / unverified(재작성 한도 도달)."""
-    from app import MAX_REPORT_REVISION
+def route_review(state: dict, *, max_revision: int) -> str:
+    """Branch: approve / revise / unverified(재작성 한도 도달). max_revision 은 그래프 조립 시 주입."""
     if state["review"]["passed"]:
         return "approve"
-    return "revise" if state.get("revision_count", 0) < MAX_REPORT_REVISION else "unverified"
+    return "revise" if state.get("revision_count", 0) < max_revision else "unverified"
 
 
 # ---------------------------------------------------------------- 💾 저장 노드 (단순 I/O)
-def save_outputs(state: dict) -> dict:
-    from app import AUTHOR
+def save_outputs(state: dict, *, author: dict) -> dict:
+    """author(파일명용 캠퍼스·반·이름)는 그래프 조립 시 주입."""
     review, md = state["review"], state["report_md"]
     out = ROOT / "outputs"
     out.mkdir(exist_ok=True)
@@ -204,7 +203,7 @@ def save_outputs(state: dict) -> dict:
         warn = f"> ⚠️ **검토 미통과(unverified)** — 재작성 {state.get('revision_count', 0)}회 후에도 남은 critical {len(review['critical'])}건. 상세는 review.md 참조.\n\n"
         md = md.replace("## SUMMARY", warn + "## SUMMARY", 1)
     pdf, pages = render_pdf(md)
-    paths = {"md": out / "report.md", "pdf": out / f"RAG-Output_{AUTHOR['campus']}_{AUTHOR['class']}_{AUTHOR['name']}.pdf",
+    paths = {"md": out / "report.md", "pdf": out / f"RAG-Output_{author['campus']}_{author['class']}_{author['name']}.pdf",
              "review": out / "review.md", "trace": out / "trace.json"}
     paths["md"].write_text(md)
     paths["pdf"].write_bytes(pdf)

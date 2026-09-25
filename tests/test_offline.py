@@ -51,9 +51,9 @@ def test_rule_check_and_route():
     critical, _ = rule_check(bad, SOURCES, page_text)
     joined = " ".join(critical)
     assert "시사점" in joined and "더 우수" in joined and "7.7" in joined and "[WM3]" in joined, critical
-    assert route_review({"review": {"passed": True}}) == "approve"
-    assert route_review({"review": {"passed": False}, "revision_count": 1}) == "revise"
-    assert route_review({"review": {"passed": False}, "revision_count": 2}) == "unverified"
+    assert route_review({"review": {"passed": True}}, max_revision=2) == "approve"
+    assert route_review({"review": {"passed": False}, "revision_count": 1}, max_revision=2) == "revise"
+    assert route_review({"review": {"passed": False}, "revision_count": 2}, max_revision=2) == "unverified"
 
 
 def test_reference_formats():
