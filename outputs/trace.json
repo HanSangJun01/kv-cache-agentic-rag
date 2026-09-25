@@ -39,12 +39,13 @@
      ],
      "relevant": [
       "[P-SW p.6]",
-      "[P-SW p.29]",
-      "[P-SW p.1]"
+      "[P-SW p.6]",
+      "[P-SW p.6]",
+      "[P-SW p.29]"
      ]
     }
    ],
-   "result": "3건 채택"
+   "result": "4건 채택"
   },
   {
    "node": "tech_research",
@@ -61,13 +62,12 @@
       "[P-SW p.21]"
      ],
      "relevant": [
-      "[P-SW p.21]",
       "[P-SW p.1]",
       "[P-SW p.21]"
      ]
     }
    ],
-   "result": "3건 채택"
+   "result": "2건 채택"
   },
   {
    "node": "tech_research",
@@ -106,6 +106,17 @@
       "[P-SW p.29]",
       "[P-SW p.1]"
      ],
+     "relevant": []
+    },
+    {
+     "query": "DeepSeek-V2 MLA limitations, overhead, trade-offs, constraints, challenges, drawbacks",
+     "retrieved": [
+      "[P-SW p.6]",
+      "[P-SW p.4]",
+      "[P-SW p.21]",
+      "[P-SW p.29]",
+      "[P-SW p.1]"
+     ],
      "relevant": [
       "[P-SW p.21]"
      ]
@@ -128,13 +139,11 @@
       "[P-SW p.8]"
      ],
      "relevant": [
-      "[P-SW p.6]",
-      "[P-SW p.1]",
       "[P-SW p.8]"
      ]
     }
    ],
-   "result": "3건 채택"
+   "result": "1건 채택"
   },
   {
    "node": "tech_research",
@@ -288,8 +297,11 @@
    "node": "tech_research",
    "agent_tech": "hw",
    "reflection": "ITME (CXL-Hybrid 계층 메모리 확장)",
-   "issues": [],
-   "revised": false
+   "issues": [
+    "reported_results의 \"ITME는 CPU-offload baseline과 비교해 multi-turn inference에서 유사하거나 더 나은 성능을 보였다\"는 서술은 원문과 맞지 않습니다. P-HW p.10의 Figure 10 설명은 초반(turn 1–9)에만 CPU-offload와 비슷하고, 이후(turn 10–20)에는 I/O contention 때문에 ITME의 성능이 점차 하락한다고 말하며, \"더 나은 성능\"이라고 일반화하지 않습니다.",
+    "limitations의 \"FPGA 기반 프로토타입으로 기능적 실현 가능성만 입증되었으며, 대규모 상용 환경에서의 실제 성능은 추가 검증이 필요하다\"는 서술은 원문에 직접 근거가 없습니다. 원문은 FPGA prototype이 hardware-level control logic과 software prefetcher의 functional feasibility를 검증한다고만 말하며, \"대규모 상용 환경\"이나 \"추가 검증 필요\"라는 평가는 제시하지 않습니다."
+   ],
+   "revised": true
   },
   {
    "node": "domain_eval",
@@ -306,12 +318,13 @@
       "[P-SW p.1]"
      ],
      "relevant": [
+      "[P-SW p.16]",
       "[P-SW p.1]",
       "[P-SW p.1]"
      ]
     }
    ],
-   "result": "2건 채택",
+   "result": "3건 채택",
    "criterion": "D1"
   },
   {
@@ -330,12 +343,11 @@
      ],
      "relevant": [
       "[P-SW p.1]",
-      "[P-SW p.21]",
       "[P-SW p.16]"
      ]
     }
    ],
-   "result": "3건 채택",
+   "result": "2건 채택",
    "criterion": "D2"
   },
   {
@@ -377,13 +389,12 @@
       "[P-SW p.29]"
      ],
      "relevant": [
-      "[P-SW p.1]",
       "[P-SW p.6]",
       "[P-SW p.29]"
      ]
     }
    ],
-   "result": "3건 채택",
+   "result": "2건 채택",
    "criterion": "D4"
   },
   {
@@ -392,7 +403,7 @@
    "criterion": "D4",
    "web_query": "DeepSeek Multi-head Latent Attention MLA integration existing inference serving stack",
    "results": [
-    "WD3",
+    "WD1",
     "WD5",
     "WD9"
    ]
@@ -413,7 +424,9 @@
    "agent_tech": "sw",
    "reflection": "DeepSeek-V2 MLA",
    "issues": [
-    "D1 평가와 근거 문장: \"DeepSeek-V2 MLA는 기존 MHA 대비 KV 캐시를 93.3% 감소시키고, 최대 생성 처리량을 5.76배 증가시켰으며, 동일 워크로드에서 GPU·메모리 비용 절감 효과가 수치로 보고되었다. 이는 저자 기준이지만, 대규모 동시 요청 환경에서 추가 비용 없이 수용량 확대가 가능함을 시사한다.\" — 원문([P-SW p.1], [P-SW p.16])에는 KV cache 감소·처리량 증가·훈련 비용 절감은 있으나, \"동일 워크로드에서 GPU·메모리 비용 절감\"이나 \"추가 비용 없이 수용량 확대\"를 직접 뒷받침하는 문구가 없다. 특히 훈련 비용 절감은 서빙 워크로드 비용과 동일하지 않다.\",\"D1 rating \"높음\" — 루브릭 D1의 높음은 \"추가 비용 없이 수용량 확대가 수치로 확인\"되어야 하는데, 원문은 \"1 node with 8 H800 GPUs\"에서의 throughput, KV cache 감소, training cost 절감만 제시할 뿐 기존 인프라에서 추가 투자 없이 수용량 확대가 가능하다는 비교/조건을 제공하지 않는다. 따라서 높음 판정은 과도하다.\",\"D2 평가와 근거 문장: \"실제 서빙 조건에서 DeepSeek-V2는 8 H800 GPU 단일 노드 기준, 5.76배의 최대 생성 처리량을 기록했으며, 이는 동시 요청 환경에서 처리량 향상과 지연 유지에 유리함을 보여준다.\" — 원문([P-SW p.16])은 generation throughput과 prompt input throughput만 제시하며 latency나 SLO 유지 여부는 없다. \"지연 유지\"는 근거 없이 추가된 해석이다.\",\"D2 rating \"높음\" — 루브릭 D2의 높음은 서빙 조건에서 처리량 향상 + 지연 유지가 모두 확인되어야 한다. 그러나 인용 원문에는 latency 수치나 지연 유지 근거가 없으므로 높음 판정은 부적절하다.\",\"D3 평가와 근거 문장: \"정확도 벤치마크(MMLU 등)에서 DeepSeek-V2는 21B 활성화 파라미터만으로 오픈소스 모델 중 최고 수준의 성능을 달성했다고 보고되었으며, MLA 구조상 KV를 압축하나 근사·손실이 아닌 잠재 벡터로 옮기는 방식이므로 설계상 품질 손실 요인이 없다.\" — 원문([P-SW p.15], [P-SW p.6])은 성능 비교는 있지만, \"설계상 품질 손실 요인이 없다\"는 서술은 없고, MLA가 품질 손실을 절대적으로 배제한다고 단정할 수 없다. 이는 대상 기술에 대한 원문 근거를 넘는 추론이다.\",\"D3 rating \"높음\" — 루브릭 D3의 높음은 정확도 벤치마크로 손실 없음/무시 가능이 확인되어야 한다. 인용된 표는 일부 과제에서 DeepSeek-V2가 우수/비슷함을 보여주지만, 모든 품질 손실이 없음을 입증하지는 않는다. 따라서 높음 판정은 과하다.\",\"D4 평가와 근거 문장: \"MLA는 기존 MHA 대비 아키텍처 변경이 필요하며, KV 캐시를 잠재 벡터로 압축하는 연산이 추가된다. 논문 및 웹 근거에 따르면 MLA는 기존 Transformer 기반 LLM에 적용 가능하나, 일부 커널·시스템 수정이 필요하고, 완전한 drop-in replacement는 아니다.\" — 인용된 원문([P-SW p.6], [P-SW p.29], [WD3], [WD5], [WD9]) 중 논문은 MLA를 효율적 attention으로 설명하지만 \"drop-in replacement가 아니다\" 또는 \"기존 서빙 스택에 일부 수정이 필요하다\"는 직접 근거는 없다. WD5/WD9는 외부 요약으로 보이며, 이 문장 전체를 그 근거로 단정하는 것은 인용 신뢰성 측면에서 약하다.\",\"D4 rating \"중간\" — 루브릭 D4의 중간은 \"일부 커널·시스템 수정 또는 제한적 HW 추가\"가 필요할 때이다. 그러나 원문에서 확인되는 것은 새로운 HW 필요 없음, FP8 변환 및 KV cache quantization 같은 배포 최적화뿐이며, 도입 난이도가 실제로 중간인지 판단할 직접 근거가 부족하다. 반대로 \"완전한 drop-in이 아니다\"는 주장도 원문에 직접 없다. 따라서 rating 근거가 불충분하다."
+    "D2 설명의 \"지연(latency) 유지가 가능\" 및 \"대규모 동시 요청 환경에서\"는 인용 원문에 직접 근거가 없습니다. 원문(P-SW p.16)은 8 H800 GPU 단일 노드에서 생성 throughput 50K tokens/s, prompt input throughput 100K tokens/s, 그리고 더 큰 batch size를 처리할 수 있다고만 말하며 latency/SLO 수치는 제시하지 않습니다.",
+    "D3 설명의 \"MLA 적용 후 DeepSeek-V2는 ... 품질 손실이 없거나 무시할 수 있는 수준\"은 원문만으로는 입증되지 않습니다. 제시된 표는 DeepSeek-V2와 다른 공개 모델들의 비교일 뿐, MLA 적용 전후의 통제된 ablation이 아니므로 MLA 자체가 품질 손실을 거의 일으키지 않는다는 결론으로 옮기면 안 됩니다. 또한 원문에는 일부 벤치마크(예: TriviaQA, NaturalQuestions, HellaSwag)에서 Mixtral 8x22B보다 낮은 점수도 있습니다.",
+    "D4 설명의 \"KV 캐시 구조 및 MLA 수식 구현 등 커널·시스템 수정 필요\"는 인용 원문에 명시적으로 뒷받침되지 않습니다. 원문은 FP8 변환, KV cache quantization, operator/communication optimizations를 언급할 뿐, MLA 도입에 반드시 커널·시스템 수정이 필요하다고 단정하지 않습니다."
    ],
    "revised": true
   },
@@ -431,10 +444,21 @@
       "[P-HW p.11]",
       "[P-HW p.7]"
      ],
-     "relevant": [
-      "[P-HW p.1]",
+     "relevant": []
+    },
+    {
+     "query": "ITME CXL-Hybrid memory extension GPU memory savings KV cache size hardware cost overhead",
+     "retrieved": [
       "[P-HW p.6]",
-      "[P-HW p.11]"
+      "[P-HW p.9]",
+      "[P-HW p.1]",
+      "[P-HW p.4]",
+      "[P-HW p.3]"
+     ],
+     "relevant": [
+      "[P-HW p.6]",
+      "[P-HW p.1]",
+      "[P-HW p.4]"
      ]
     }
    ],
@@ -482,11 +506,12 @@
      ],
      "relevant": [
       "[P-HW p.9]",
+      "[P-HW p.9]",
       "[P-HW p.11]"
      ]
     }
    ],
-   "result": "2건 채택",
+   "result": "3건 채택",
    "criterion": "D3"
   },
   {
@@ -504,13 +529,14 @@
       "[P-HW p.10]"
      ],
      "relevant": [
+      "[P-HW p.1]",
       "[P-HW p.2]",
       "[P-HW p.5]",
       "[P-HW p.11]"
      ]
     }
    ],
-   "result": "3건 채택",
+   "result": "4건 채택",
    "criterion": "D4"
   },
   {
@@ -519,8 +545,8 @@
    "criterion": "D4",
    "web_query": "CXL memory expansion LLM inference KV cache integration existing inference serving stack",
    "results": [
-    "WD1",
     "WD2",
+    "WD3",
     "WD4"
    ]
   },
@@ -540,9 +566,8 @@
    "agent_tech": "hw",
    "reflection": "ITME (CXL-Hybrid 계층 메모리 확장)",
    "issues": [
-    "근거 목록에 없는 출처 태그 [P-HW p.3]",
-    "D3 항목: 평점이 루브릭의 높음/중간/낮음 중 하나가 아니라 '판단 유보'로 되어 있어 기준과 불일치합니다. 또한 근거 문장인 '설계상 정확도 손실 요인은 없다'는 원문에 정확도/품질 벤치마크가 없으므로 뒷받침되지 않습니다. [P-HW p.1][P-HW p.2][P-HW p.3]",
-    "D4 항목: 평점을 '중간'으로 둔 것은 과합니다. 원문은 ITME가 CXL-hybrid memory, PCIe Gen5 NVMe SSD, RDMA, FPGA prototype 등 추가 하드웨어/시스템 구성을 전제로 하므로, 루브릭상 도입 용이성은 '낮음'에 가깝습니다. [P-HW p.1][P-HW p.5][P-HW p.11]"
+    "D3: 평가 등급을 '판단 유보'로 둔 것은 루브릭(D1~D4)에 없는 값이며, 원문에는 정확도·출력 품질 벤치마크가 없어 '품질 유지'를 높음/중간/낮음 중 하나로 판정할 근거가 없습니다. 또한 '설계상 데이터 손실 요인은 없음'은 원문에 없는 단정입니다.",
+    "D1: rationale에서 'throughput 최대 35.7% 개선'을 비용 효율의 근거로 사용했는데, 원문의 35.7%는 처리량 개선이지 GPU·메모리 비용 절감 수치가 아닙니다. 비용 효율(D1) 판단 근거로는 직접적 비용 절감/증가 근거가 필요합니다."
    ],
    "revised": true
   },
@@ -563,9 +588,9 @@
    "criterion": "M1",
    "web_query": "LLM inference serving market demand slowdown constraints data",
    "results": [
-    "WM20",
-    "WM21",
-    "WM22"
+    "WM14",
+    "WM19",
+    "WM20"
    ]
   },
   {
@@ -584,11 +609,13 @@
      ],
      "relevant": [
       "[P-SW p.5]",
+      "[P-SW p.1]",
+      "[P-SW p.4]",
       "[P-SW p.16]"
      ]
     }
    ],
-   "result": "2건 채택",
+   "result": "4건 채택",
    "criterion": "M2"
   },
   {
@@ -597,9 +624,9 @@
    "criterion": "M2",
    "web_query": "DeepSeek Multi-head Latent Attention MLA adoption production deployment product launch",
    "results": [
-    "WM8",
-    "WM10",
-    "WM12"
+    "WM15",
+    "WM22",
+    "WM26"
    ]
   },
   {
@@ -608,9 +635,9 @@
    "criterion": "M2",
    "web_query": "DeepSeek Multi-head Latent Attention MLA deployment requirements compatibility constraints",
    "results": [
+    "WM27",
     "WM25",
-    "WM26",
-    "WM27"
+    "WM28"
    ]
   },
   {
@@ -641,11 +668,11 @@
    "node": "market_eval",
    "agent_tech": "sw",
    "criterion": "M3",
-   "web_query": "DeepSeek Multi-head Latent Attention MLA support vLLM SGLang TensorRT-LLM framework standard",
+   "web_query": "DeepSeek Multi-head Latent Attention MLA vLLM SGLang TensorRT-LLM inference framework support",
    "results": [
-    "WM14",
     "WM16",
-    "WM19"
+    "WM17",
+    "WM18"
    ]
   },
   {
@@ -654,17 +681,24 @@
    "criterion": "M3",
    "web_query": "DeepSeek Multi-head Latent Attention MLA limitations unsupported hardware software requirements",
    "results": [
-    "WM8",
-    "WM28",
-    "WM29"
+    "WM23",
+    "WM24",
+    "WM25"
    ]
   },
   {
    "node": "market_eval",
    "agent_tech": "sw",
    "reflection": "DeepSeek-V2 MLA",
-   "issues": [],
-   "revised": false
+   "issues": [
+    "M1의 rationale 첫 문장: \"대규모 LLM 추론 서빙 시장은 여러 시장조사기관 리포트에서 2025~2035년까지 연평균 21~25%의 고성장세가 예측되고 있다.\"는 인용된 원문들[WM1][WM3][WM5]에 있는 각 시장 리포트 수치들을 단순 합쳐 일반화한 것으로, MLA 또는 \"대규모 LLM 추론 서빙 시장\" 자체를 직접 뒷받침하는 원문은 아니다. 특히 WM1은 cross-platform LLM inference engine 시장, WM5는 enterprise LLM 시장, WM3는 LLM 전체 시장으로 범위가 서로 달라 동일 시장에 대한 근거로 보기 어렵다.",
+    "M2의 rationale 첫 문장: \"MLA는 DeepSeek-V2, V3, R1 등 실제 상용·오픈소스 모델에 적용되어 운영되고 있으며\"는 원문에서 직접 확인되는 사실보다 더 강하게 단정한 표현이다. 제공된 원문은 DeepSeek-V2 논문과 SGLang/문서에서 V3/R1 관련 언급이 있으나, '상용·오픈소스 모델에 적용되어 운영' 중이라는 운영 현황까지는 명시하지 않는다.",
+    "M2의 supporting_evidence 첫 항목: \"DeepSeek-V2, V3, R1 등 MLA 적용 모델이 실제로 공개·배포되고 있음 [P-SW p.1][P-SW p.5][WM15][WM22][WM26]\"에서 P-SW p.1과 p.5는 V2/V2-Lite만 직접 말하고, V3/R1은 WM15/WM26 등의 보조 자료에 의존한다. 또한 WM15는 \"production architecture\" 등의 홍보성 서술이며 원문 근거가 충분히 구체적이지 않다.",
+    "M3의 rationale 첫 문장: \"MLA는 SGLang, LMDeploy, TensorRT-LLM, vLLM 등 복수의 주요 추론 프레임워크에서 지원되고 있으며\"는 WM18에 나온 백엔드 목록과는 부합하지만, WM16/WM17은 주로 SGLang 중심이고 WM18의 'supported backends'가 실제 구현/정식 지원인지 구분이 없다. 따라서 '복수 프레임워크 지원' 자체는 가능하더라도 '주요'라는 평가는 원문만으로는 과장될 수 있다.",
+    "M3의 rationale 문장: \"MLA가 공식적인 산업 표준(예: ONNX, MLPerf 등)으로 채택되었거나, 표준화 단체에서 규격화된 사례는 확인되지 않는다.\"는 제공된 원문 세트에 '표준화 단체에서 규격화되지 않았다'는 부정 근거가 없어, 부재 증명을 단정한 부분이다. 원문은 단지 일부 프레임워크 지원과 연구/문서 수준의 언급만 보여준다.",
+    "M3의 supporting_evidence 항목 \"MLA와 기존 MHA/GQA 구조 간 호환성 연구 및 이식성 논문 발표 [WM27][WM23]\"는 WM23이 논문 소개 문장 수준일 뿐 '이식성 논문 발표'를 직접 입증하지는 않으며, WM27은 MLA-MHA/GQA 호환성 연구를 언급하지만 표준화 지지 근거는 아니다."
+   ],
+   "revised": true
   },
   {
    "node": "market_eval",
@@ -683,9 +717,9 @@
    "criterion": "M1",
    "web_query": "CXL memory market demand slowdown constraints data",
    "results": [
+    "WM8",
     "WM2",
-    "WM4",
-    "WM13"
+    "WM9"
    ]
   },
   {
@@ -703,13 +737,11 @@
       "[P-HW p.11]"
      ],
      "relevant": [
-      "[P-HW p.11]",
-      "[P-HW p.2]",
       "[P-HW p.11]"
      ]
     }
    ],
-   "result": "3건 채택",
+   "result": "1건 채택",
    "criterion": "M2"
   },
   {
@@ -718,9 +750,9 @@
    "criterion": "M2",
    "web_query": "CXL memory expansion LLM inference KV cache adoption production deployment product launch",
    "results": [
-    "WM9",
-    "WM11",
-    "WM18"
+    "WM10",
+    "WM7",
+    "WM12"
    ]
   },
   {
@@ -729,9 +761,9 @@
    "criterion": "M2",
    "web_query": "CXL memory expansion LLM inference KV cache deployment requirements compatibility constraints",
    "results": [
-    "WM30",
-    "WM11",
-    "WM31"
+    "WM7",
+    "WM10",
+    "WM21"
    ]
   },
   {
@@ -751,22 +783,23 @@
      "relevant": [
       "[P-HW p.2]",
       "[P-HW p.1]",
+      "[P-HW p.7]",
       "[P-HW p.4]"
      ]
     }
    ],
-   "result": "3건 채택",
+   "result": "4건 채택",
    "criterion": "M3"
   },
   {
    "node": "market_eval",
    "agent_tech": "hw",
    "criterion": "M3",
-   "web_query": "CXL memory expansion LLM inference KV cache support vLLM SGLang TensorRT-LLM framework standard",
+   "web_query": "CXL memory expansion LLM inference KV cache CXL Consortium specification Linux kernel memory tiering vendor support",
    "results": [
     "WM7",
-    "WM15",
-    "WM17"
+    "WM11",
+    "WM13"
    ]
   },
   {
@@ -775,9 +808,9 @@
    "criterion": "M3",
    "web_query": "CXL memory expansion LLM inference KV cache limitations unsupported hardware software requirements",
    "results": [
-    "WM23",
-    "WM24",
-    "WM11"
+    "WM21",
+    "WM7",
+    "WM12"
    ]
   },
   {
@@ -785,12 +818,10 @@
    "agent_tech": "hw",
    "reflection": "ITME (CXL-Hybrid 계층 메모리 확장)",
    "issues": [
-    "근거 목록에 없는 출처 태그 [P-HW p.8]",
-    "근거 목록에 없는 출처 태그 [P-HW p.9]",
-    "M2의 설명문에서 \"vLLM 기반 LLM 추론 실험에서 ITME의 성능 평가가 이루어짐\"이라고 했지만, 제공된 원문에는 ITME가 vLLM에 통합되었다거나 vLLM에서 실험했다는 근거가 보이지 않습니다. 본문에 확인되는 것은 \"existing software-level policies\"와의 호환성/시너지 주장뿐이며, 실제 vLLM 실험은 인용 태그로 제시된 원문에서 검증되지 않습니다.",
-    "M2의 supporting_evidence 중 \"vLLM 기반 LLM 추론 실험\", \"주요 LLM 서빙 스택과의 통합 실험\"은 제공된 원문 범위에서 확인되지 않습니다. 특히 p.8/p.9는 원문이 제시되지 않아, 이 주장은 인용 태그가 가리키는 원문으로 뒷받침된다고 보기 어렵습니다.",
-    "M3의 rationale에서 \"CXL 2.0/3.0 표준이 산업 표준으로 자리잡아가고 있다\"고 단정했지만, 제공된 원문에는 해당 표준 버전의 산업 표준화/확산을 직접 뒷받침하는 내용이 없습니다. WM2는 단지 주요 프로세서 플랫폼 지원을 말할 뿐입니다.",
-    "M3의 supporting_evidence에서 \"vLLM, SGLang, TensorRT-LLM 등에서 paged KV cache, CXL 기반 오프로딩 등 실험적 지원\"이라고 적었는데, 제공된 원문은 vLLM/SGLang/TensorRT-LLM의 paged KV cache·continuous batching·prefix caching 등을 설명할 뿐 CXL 기반 오프로딩 지원은 제시하지 않습니다. CXL 관련 서술은 별도의 WM7에서 Leo 제품의 프레임워크 통합을 말하는 것이어서, 이를 이들 프레임워크 자체의 지원으로 옮겨 적은 것으로 보입니다."
+    "M2의 rationale 문장 \"XConn, MemVerge, Astera Labs, Samsung 등에서 실제 데모 및 평가 진행 [WM7][WM10][WM12]\"는 원문으로 뒷받침되지 않습니다. 제시된 원문에는 XConn·MemVerge와 Samsung 관련 언급은 있으나 Astera Labs는 나오지 않습니다.",
+    "M3의 rationale 문장 \"ITME는 CXL-hybrid memory 표준 기반 설계, vLLM 등과 연동 가능성 언급 [P-HW p.2][P-HW p.1]\"는 원문과 다릅니다. 원문은 ITME가 CXL-hybrid memory를 활용한 설계를 설명할 뿐, '표준 기반'이라고 하거나 vLLM 연동을 언급하지 않습니다.",
+    "M3의 supporting_evidence 문장 \"ITME는 CXL-hybrid memory 표준 기반 설계, vLLM 등과 연동 가능성 언급 [P-HW p.2][P-HW p.1]\"도 동일하게 근거 부족입니다. 원문에는 ITME의 user-level prefetcher API와 LLM inference frameworks 언급은 있으나 특정 프레임워크(vLLM)나 표준 채택 근거는 없습니다.",
+    "M3의 rationale 문장 \"CXL 메모리 확장·풀링은 CXL Consortium 등에서 표준화 논의 중 [WM11][WM12]\"는 과도합니다. 인용 원문은 CXL Consortium의 출시 일정/제품 소개 또는 시장 설명일 뿐, 표준화 논의 자체를 뒷받침하지 않습니다."
    ],
    "revised": true
   }
@@ -819,7 +850,7 @@
    "citation": "Jang, H. et al.(2026). ITME: Inference Tiered Memory Expansion with Disaggregated CXL-Hybrid Memories. *arXiv*, 2606.12556."
   },
   {
-   "id": "WD1",
+   "id": "WD2",
    "kind": "web",
    "tech": "hw",
    "title": "Exploring CXL-based KV Cache Storage for LLM Serving Yupeng Tang1∗",
@@ -830,7 +861,7 @@
    "citation": "mlforsystems.org(n.d.). *Exploring CXL-based KV Cache Storage for LLM Serving Yupeng Tang1∗*. mlforsystems.org, https://mlforsystems.org/assets/papers/neurips2024/paper17.pdf"
   },
   {
-   "id": "WD2",
+   "id": "WD3",
    "kind": "web",
    "tech": "hw",
    "title": "Boosting LLM inference with CXL-PNM: A scalable solution for data centers | Jungwook Choi posted on the topic",
@@ -852,7 +883,7 @@
    "citation": "Amit Golander(2026-03-13). *How CXL Memory Expansion Improves AI Economics*. ASTERA LABS, INC., https://www.asteralabs.com/resources/blog/inference-tokenomics-how-cxl-memory-expansion-improves-ai-economics"
   },
   {
-   "id": "WD3",
+   "id": "WD1",
    "kind": "web",
    "tech": "sw",
    "title": "Towards Economical Inference: Enabling DeepSeek’s Multi-Head Latent Attention in Any Transformer-based LLMs",
@@ -888,12 +919,12 @@
    "id": "WD8",
    "kind": "web",
    "tech": "hw",
-   "title": "Astera Labs Leo CXL Boost Azure M-series with 2TB | ALAB Stock News",
-   "url": "https://www.stocktitan.net/news/ALAB/astera-labs-leo-cxl-smart-memory-controllers-on-microsoft-azure-m-dig12mr10z66.html",
-   "site": "stocktitan.net",
-   "date": "n.d.",
+   "title": "Breaking AI Memory Limits with CXL Memory Pooling",
+   "url": "https://semiconductor.samsung.com/news-events/tech-blog/breaking-ai-memory-limits-with-cxl-memory-pooling",
+   "site": "Samsung Semiconductor Global",
+   "date": "2026-09-04",
    "ref_type": "기타",
-   "citation": "stocktitan.net(n.d.). *Astera Labs Leo CXL Boost Azure M-series with 2TB | ALAB Stock News*. stocktitan.net, https://www.stocktitan.net/news/ALAB/astera-labs-leo-cxl-smart-memory-controllers-on-microsoft-azure-m-dig12mr10z66.html"
+   "citation": "Samsung Semiconductor Global(2026-09-04). *Breaking AI Memory Limits with CXL Memory Pooling*. Samsung Semiconductor Global, https://semiconductor.samsung.com/news-events/tech-blog/breaking-ai-memory-limits-with-cxl-memory-pooling"
   },
   {
    "id": "WD5",
@@ -932,23 +963,23 @@
    "id": "WD11",
    "kind": "web",
    "tech": "sw",
+   "title": "Understanding Multi-Head Latent Attention",
+   "url": "https://planetbanatt.net/articles/mla.html",
+   "site": "planetbanatt.net",
+   "date": "n.d.",
+   "ref_type": "기타",
+   "citation": "Eryk Banatt(n.d.). *Understanding Multi-Head Latent Attention*. planetbanatt.net, https://planetbanatt.net/articles/mla.html"
+  },
+  {
+   "id": "WD12",
+   "kind": "web",
+   "tech": "sw",
    "title": "Build DeepSeek-V3: Multi-Head Latent Attention (MLA) Architecture",
    "url": "https://pyimagesearch.com/2026/03/16/build-deepseek-v3-multi-head-latent-attention-mla-architecture",
    "site": "PyImageSearch",
    "date": "2026-03-16",
    "ref_type": "기타",
    "citation": "Puneet Mangla(2026-03-16). *Build DeepSeek-V3: Multi-Head Latent Attention (MLA) Architecture*. PyImageSearch, https://pyimagesearch.com/2026/03/16/build-deepseek-v3-multi-head-latent-attention-mla-architecture"
-  },
-  {
-   "id": "WD12",
-   "kind": "web",
-   "tech": "sw",
-   "title": "Multi-Head Latent Attention From Scratch | One of the major",
-   "url": "https://www.youtube.com/watch?v=NlDQUj1olXM",
-   "site": "youtube.com",
-   "date": "n.d.",
-   "ref_type": "기타",
-   "citation": "youtube.com(n.d.). *Multi-Head Latent Attention From Scratch | One of the major*. youtube.com, https://www.youtube.com/watch?v=NlDQUj1olXM"
   },
   {
    "id": "WM1",
@@ -1009,92 +1040,26 @@
    "id": "WM6",
    "kind": "web",
    "tech": "hw",
-   "title": "CXL Memory Pooling Appliance Market Size, Share [2026-2034]",
+   "title": "CXL Memory Pooling Appliance Market Size, Share [2026",
    "url": "https://www.fortunebusinessinsights.com/cxl-memory-pooling-appliance-market-117960",
    "site": "fortunebusinessinsights.com",
    "date": "n.d.",
    "ref_type": "기타",
-   "citation": "fortunebusinessinsights.com(n.d.). *CXL Memory Pooling Appliance Market Size, Share [2026-2034]*. fortunebusinessinsights.com, https://www.fortunebusinessinsights.com/cxl-memory-pooling-appliance-market-117960"
+   "citation": "fortunebusinessinsights.com(n.d.). *CXL Memory Pooling Appliance Market Size, Share [2026*. fortunebusinessinsights.com, https://www.fortunebusinessinsights.com/cxl-memory-pooling-appliance-market-117960"
   },
   {
    "id": "WM8",
    "kind": "web",
-   "tech": "sw",
-   "title": "DeepSeek's Multi-Head Latent Attention",
-   "url": "https://liorsinai.github.io/machine-learning/2025/02/22/mla.html",
-   "site": "liorsinai.github.io",
-   "date": "2025-02-22",
-   "ref_type": "기타",
-   "citation": "liorsinai.github.io(2025-02-22). *DeepSeek's Multi-Head Latent Attention*. liorsinai.github.io, https://liorsinai.github.io/machine-learning/2025/02/22/mla.html"
-  },
-  {
-   "id": "WM9",
-   "kind": "web",
    "tech": "hw",
-   "title": "CXL 4.0 Infrastructure Planning Guide | Introl Blog",
-   "url": "https://introl.com/blog/cxl-4-0-infrastructure-planning-guide-ai-memory-pooling-2025",
-   "site": "Introl",
-   "date": "2026-04-27",
-   "ref_type": "기타",
-   "citation": "Introl(2026-04-27). *CXL 4.0 Infrastructure Planning Guide | Introl Blog*. Introl, https://introl.com/blog/cxl-4-0-infrastructure-planning-guide-ai-memory-pooling-2025"
-  },
-  {
-   "id": "WM10",
-   "kind": "web",
-   "tech": "sw",
-   "title": "A Gentle Introduction to Multi-Head Latent Attention (MLA)",
-   "url": "https://machinelearningmastery.com/a-gentle-introduction-to-multi-head-latent-attention-mla",
-   "site": "MachineLearningMastery.com",
-   "date": "2025-06-23",
-   "ref_type": "기타",
-   "citation": "Adrian Tam(2025-06-23). *A Gentle Introduction to Multi-Head Latent Attention (MLA)*. MachineLearningMastery.com, https://machinelearningmastery.com/a-gentle-introduction-to-multi-head-latent-attention-mla"
-  },
-  {
-   "id": "WM13",
-   "kind": "web",
-   "tech": "hw",
-   "title": "The Rebirth of Persistent Memory: How CXL lays",
-   "url": "https://www.snia.org/blog/2026/rebirth-persistent-memory-how-cxl-lays-foundation-current-and-next-generation-persistent",
-   "site": "snia.org",
+   "title": "Dissecting CXL Memory Performance at Scale: Analysis, Modeling, and Optimization",
+   "url": "https://arxiv.org/html/2409.14317v1",
+   "site": "arxiv.org",
    "date": "n.d.",
    "ref_type": "기타",
-   "citation": "snia.org(n.d.). *The Rebirth of Persistent Memory: How CXL lays*. snia.org, https://www.snia.org/blog/2026/rebirth-persistent-memory-how-cxl-lays-foundation-current-and-next-generation-persistent"
+   "citation": "arxiv.org(n.d.). *Dissecting CXL Memory Performance at Scale: Analysis, Modeling, and Optimization*. arxiv.org, https://arxiv.org/html/2409.14317v1"
   },
   {
    "id": "WM7",
-   "kind": "web",
-   "tech": "hw",
-   "title": "How CXL Memory Expansion Improves AI Economics",
-   "url": "https://www.asteralabs.com/resources/blog/inference-tokenomics-how-cxl-memory-expansion-improves-ai-economics",
-   "site": "ASTERA LABS, INC.",
-   "date": "2026-03-13",
-   "ref_type": "기타",
-   "citation": "Amit Golander(2026-03-13). *How CXL Memory Expansion Improves AI Economics*. ASTERA LABS, INC., https://www.asteralabs.com/resources/blog/inference-tokenomics-how-cxl-memory-expansion-improves-ai-economics"
-  },
-  {
-   "id": "WM14",
-   "kind": "web",
-   "tech": "sw",
-   "title": "DeepSeek-V2: Multi-Head Latent Attention (MLA)",
-   "url": "https://hungchun0201.github.io/agentic-ai-survey/papers/deepseek-mla/index.html",
-   "site": "hungchun0201.github.io",
-   "date": "n.d.",
-   "ref_type": "기타",
-   "citation": "hungchun0201.github.io(n.d.). *DeepSeek-V2: Multi-Head Latent Attention (MLA)*. hungchun0201.github.io, https://hungchun0201.github.io/agentic-ai-survey/papers/deepseek-mla/index.html"
-  },
-  {
-   "id": "WM15",
-   "kind": "web",
-   "tech": "hw",
-   "title": "vLLM vs SGLang vs TensorRT-LLM - Inference Engineering",
-   "url": "https://inferenceengineering.tech/learn/vllm-vs-sglang-vs-tensorrt-llm",
-   "site": "inferenceengineering.tech",
-   "date": "2026",
-   "ref_type": "기타",
-   "citation": "Philip Kiely(2026). *vLLM vs SGLang vs TensorRT-LLM - Inference Engineering*. inferenceengineering.tech, https://inferenceengineering.tech/learn/vllm-vs-sglang-vs-tensorrt-llm"
-  },
-  {
-   "id": "WM11",
    "kind": "web",
    "tech": "hw",
    "title": "How CXL Transforms RAG and KV Cache Performance",
@@ -1105,51 +1070,40 @@
    "citation": "Sandeep Dattaprasad(2025-11-20). *How CXL Transforms RAG and KV Cache Performance*. ASTERA LABS, INC., https://www.asteralabs.com/resources/blog/breaking-through-the-memory-wall-how-cxl-transforms-rag-and-kv-cache-performance"
   },
   {
-   "id": "WM12",
-   "kind": "web",
-   "tech": "sw",
-   "title": "DeepSeek + SGLang: Multi-Head Latent Attention",
-   "url": "https://verda.com/blog/deepseek-sglang-multi-head-latent-attention",
-   "site": "Verda",
-   "date": "2025-03-12",
-   "ref_type": "기타",
-   "citation": "Verda(2025-03-12). *DeepSeek + SGLang: Multi-Head Latent Attention*. Verda, https://verda.com/blog/deepseek-sglang-multi-head-latent-attention"
-  },
-  {
-   "id": "WM17",
+   "id": "WM10",
    "kind": "web",
    "tech": "hw",
-   "title": "vLLM vs TensorRT-LLM vs SGLang: Which Inference Engine to Deploy",
-   "url": "https://www.runpod.io/articles/comparison/vllm-vs-tensorrt-llm",
-   "site": "runpod.io",
-   "date": "2026-06-23",
+   "title": "CXL 4.0 Infrastructure Planning Guide | Introl Blog",
+   "url": "https://introl.com/blog/cxl-4-0-infrastructure-planning-guide-ai-memory-pooling-2025",
+   "site": "Introl",
+   "date": "2026-04-27",
    "ref_type": "기타",
-   "citation": "runpod.io(2026-06-23). *vLLM vs TensorRT-LLM vs SGLang: Which Inference Engine to Deploy*. runpod.io, https://www.runpod.io/articles/comparison/vllm-vs-tensorrt-llm"
+   "citation": "Introl(2026-04-27). *CXL 4.0 Infrastructure Planning Guide | Introl Blog*. Introl, https://introl.com/blog/cxl-4-0-infrastructure-planning-guide-ai-memory-pooling-2025"
   },
   {
-   "id": "WM16",
+   "id": "WM11",
    "kind": "web",
-   "tech": "sw",
-   "title": "Multi-Head Latent Attention (MLA) on GPU Cloud: Cut KV Cache ~98% and Serve More Users Per GPU (2026 Guide) | Spheron Blog",
-   "url": "https://www.spheron.network/blog/multi-head-latent-attention-mla-gpu-cloud",
-   "site": "Spheron",
-   "date": "2026-06-25",
+   "tech": "hw",
+   "title": "CXL 4.0 Infrastructure Planning Guide | Introl Blog",
+   "url": "https://introl.com/blog/cxl-4-0-infrastructure-planning-guide-memory-pooling-2025",
+   "site": "Introl",
+   "date": "2026-03-29",
    "ref_type": "기타",
-   "citation": "Spheron(2026-06-25). *Multi-Head Latent Attention (MLA) on GPU Cloud: Cut KV Cache ~98% and Serve More Users Per GPU (2026 Guide) | Spheron Blog*. Spheron, https://www.spheron.network/blog/multi-head-latent-attention-mla-gpu-cloud"
+   "citation": "Introl(2026-03-29). *CXL 4.0 Infrastructure Planning Guide | Introl Blog*. Introl, https://introl.com/blog/cxl-4-0-infrastructure-planning-guide-memory-pooling-2025"
   },
   {
-   "id": "WM19",
+   "id": "WM9",
    "kind": "web",
-   "tech": "sw",
-   "title": "DeepSeek MLA: Scalable Latent Attention",
-   "url": "https://www.emergentmind.com/topics/deepseek-mla",
-   "site": "emergentmind.com",
+   "tech": "hw",
+   "title": "The Rebirth of Persistent Memory: How CXL lays",
+   "url": "https://www.snia.org/blog/2026/rebirth-persistent-memory-how-cxl-lays-foundation-current-and-next-generation-persistent",
+   "site": "snia.org",
    "date": "n.d.",
    "ref_type": "기타",
-   "citation": "emergentmind.com(n.d.). *DeepSeek MLA: Scalable Latent Attention*. emergentmind.com, https://www.emergentmind.com/topics/deepseek-mla"
+   "citation": "snia.org(n.d.). *The Rebirth of Persistent Memory: How CXL lays*. snia.org, https://www.snia.org/blog/2026/rebirth-persistent-memory-how-cxl-lays-foundation-current-and-next-generation-persistent"
   },
   {
-   "id": "WM18",
+   "id": "WM12",
    "kind": "web",
    "tech": "hw",
    "title": "Breaking AI Memory Limits with CXL Memory Pooling",
@@ -1160,40 +1114,73 @@
    "citation": "Samsung Semiconductor Global(2026-09-04). *Breaking AI Memory Limits with CXL Memory Pooling*. Samsung Semiconductor Global, https://semiconductor.samsung.com/news-events/tech-blog/breaking-ai-memory-limits-with-cxl-memory-pooling"
   },
   {
-   "id": "WM20",
+   "id": "WM16",
    "kind": "web",
    "tech": "sw",
-   "title": "[PDF] Optimizing LLM Inference: Fluid-Guided Online Scheduling with Memory Constraints | Semantic Scholar",
-   "url": "https://www.semanticscholar.org/paper/Optimizing-LLM-Inference%3A-Fluid-Guided-Online-with-Ao-Luo/775582777e8b5a0e1b61d8d7ad73cf303f8fe754",
-   "site": "semanticscholar.org",
+   "title": "vLLM, SGLang, TRT-LLM: LLM Engine Guide",
+   "url": "https://pub.towardsai.net/part-3-implementation-engine-level-choosing-the-runtime-that-gives-you-these-for-free-b0e9081205b0",
+   "site": "pub.towardsai.net",
    "date": "n.d.",
    "ref_type": "기타",
-   "citation": "semanticscholar.org(n.d.). *[PDF] Optimizing LLM Inference: Fluid-Guided Online Scheduling with Memory Constraints | Semantic Scholar*. semanticscholar.org, https://www.semanticscholar.org/paper/Optimizing-LLM-Inference%3A-Fluid-Guided-Online-with-Ao-Luo/775582777e8b5a0e1b61d8d7ad73cf303f8fe754"
+   "citation": "pub.towardsai.net(n.d.). *vLLM, SGLang, TRT-LLM: LLM Engine Guide*. pub.towardsai.net, https://pub.towardsai.net/part-3-implementation-engine-level-choosing-the-runtime-that-gives-you-these-for-free-b0e9081205b0"
+  },
+  {
+   "id": "WM13",
+   "kind": "web",
+   "tech": "hw",
+   "title": "Wolley Introduces CXL® Memory Expansion Controller for AI Workstation at FMS2025",
+   "url": "https://finance.yahoo.com/news/wolley-introduces-cxl-memory-expansion-130000438.html",
+   "site": "Yahoo Finance",
+   "date": "2025-08-06",
+   "ref_type": "기타",
+   "citation": "Yahoo Finance(2025-08-06). *Wolley Introduces CXL® Memory Expansion Controller for AI Workstation at FMS2025*. Yahoo Finance, https://finance.yahoo.com/news/wolley-introduces-cxl-memory-expansion-130000438.html"
+  },
+  {
+   "id": "WM17",
+   "kind": "web",
+   "tech": "sw",
+   "title": "DeepSeek Models",
+   "url": "https://sgl-project-sglang-93.mintlify.app/models/deepseek",
+   "site": "SGLang",
+   "date": "n.d.",
+   "ref_type": "기타",
+   "citation": "SGLang(n.d.). *DeepSeek Models*. SGLang, https://sgl-project-sglang-93.mintlify.app/models/deepseek"
+  },
+  {
+   "id": "WM14",
+   "kind": "web",
+   "tech": "sw",
+   "title": "2026 LLM Inference Latency in Europe: GPU Cost Guide",
+   "url": "https://lyceum.technology/magazine/llm-inference-latency-europe-benchmark-2026",
+   "site": "Lyceum Technology",
+   "date": "2026-06-09",
+   "ref_type": "기타",
+   "citation": "Lyceum Technology(2026-06-09). *2026 LLM Inference Latency in Europe: GPU Cost Guide*. Lyceum Technology, https://lyceum.technology/magazine/llm-inference-latency-europe-benchmark-2026"
+  },
+  {
+   "id": "WM19",
+   "kind": "web",
+   "tech": "sw",
+   "title": "The Hidden Economics of LLM Inference",
+   "url": "https://www.hebbia.com/blog/the-hidden-economics-of-llm-inference",
+   "site": "Hebbia",
+   "date": "2026-04-02",
+   "ref_type": "기타",
+   "citation": "Hebbia(2026-04-02). *The Hidden Economics of LLM Inference*. Hebbia, https://www.hebbia.com/blog/the-hidden-economics-of-llm-inference"
+  },
+  {
+   "id": "WM18",
+   "kind": "web",
+   "tech": "sw",
+   "title": "DeepSeek-V3: The 671B MoE Model You Can Run Locally in 2026",
+   "url": "https://dev.to/rams901/deepseek-v3-the-671b-moe-model-you-can-run-locally-in-2026-30o4",
+   "site": "DEV Community",
+   "date": "2026-05-20",
+   "ref_type": "기타",
+   "citation": "DEV Community(2026-05-20). *DeepSeek-V3: The 671B MoE Model You Can Run Locally in 2026*. DEV Community, https://dev.to/rams901/deepseek-v3-the-671b-moe-model-you-can-run-locally-in-2026-30o4"
   },
   {
    "id": "WM21",
-   "kind": "web",
-   "tech": "sw",
-   "title": "Medium",
-   "url": "https://medium.com/@kimdoil1211/revolutionizing-llm-serving-automated-inference-engine-tuning-for-slo-optimization-a68f8e2c4599",
-   "site": "medium.com",
-   "date": "n.d.",
-   "ref_type": "기타",
-   "citation": "medium.com(n.d.). *Medium*. medium.com, https://medium.com/@kimdoil1211/revolutionizing-llm-serving-automated-inference-engine-tuning-for-slo-optimization-a68f8e2c4599"
-  },
-  {
-   "id": "WM22",
-   "kind": "web",
-   "tech": "sw",
-   "title": "Medium",
-   "url": "https://medium.com/@aniketpatil8451/exploring-open-source-frameworks-for-optimizing-llm-inference-and-serving-faf7636f3b12",
-   "site": "medium.com",
-   "date": "n.d.",
-   "ref_type": "기타",
-   "citation": "medium.com(n.d.). *Medium*. medium.com, https://medium.com/@aniketpatil8451/exploring-open-source-frameworks-for-optimizing-llm-inference-and-serving-faf7636f3b12"
-  },
-  {
-   "id": "WM23",
    "kind": "web",
    "tech": "hw",
    "title": "How We Solved the KV Cache Bottleneck in LLM Inference",
@@ -1204,29 +1191,40 @@
    "citation": "medium.com(n.d.). *How We Solved the KV Cache Bottleneck in LLM Inference*. medium.com, https://medium.com/@jooho.lee_93960/how-we-solved-the-kv-cache-bottleneck-in-llm-inference-with-cxl-shared-memory-d5133dcfb044"
   },
   {
-   "id": "WM24",
+   "id": "WM15",
    "kind": "web",
-   "tech": "hw",
-   "title": "Exploring CXL-based KV Cache Storage for LLM Serving Yupeng Tang1∗",
-   "url": "https://mlforsystems.org/assets/papers/neurips2024/paper17.pdf",
-   "site": "mlforsystems.org",
-   "date": "n.d.",
+   "tech": "sw",
+   "title": "Multi-Head Latent Attention (MLA) Explained: DeepSeek",
+   "url": "https://theindex26.com/multi-head-latent-attention-mla-deepseek-kv-cache",
+   "site": "INDEX 26 Intelligence",
+   "date": "2026-08-28",
    "ref_type": "기타",
-   "citation": "mlforsystems.org(n.d.). *Exploring CXL-based KV Cache Storage for LLM Serving Yupeng Tang1∗*. mlforsystems.org, https://mlforsystems.org/assets/papers/neurips2024/paper17.pdf"
+   "citation": "INDEX 26 Intelligence(2026-08-28). *Multi-Head Latent Attention (MLA) Explained: DeepSeek*. INDEX 26 Intelligence, https://theindex26.com/multi-head-latent-attention-mla-deepseek-kv-cache"
   },
   {
-   "id": "WM25",
+   "id": "WM23",
    "kind": "web",
    "tech": "sw",
    "title": "Towards Economical Inference: Enabling DeepSeek’s Multi-Head Latent Attention in Any Transformer-based LLMs",
-   "url": "https://aclanthology.org/2025.acl-long.1597.pdf",
+   "url": "https://aclanthology.org/2025.acl-long.1597",
    "site": "ACL Anthology",
    "date": "2025",
    "ref_type": "논문",
    "citation": "Ji, T. et al.(2025). Towards Economical Inference: Enabling DeepSeek’s Multi-Head Latent Attention in Any Transformer-based LLMs. *Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)*, 33313-33328."
   },
   {
-   "id": "WM26",
+   "id": "WM24",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Multi-Head Latent Attention From Scratch | One of the major DeepSeek innovation",
+   "url": "https://www.youtube.com/watch?v=NlDQUj1olXM",
+   "site": "youtube.com",
+   "date": "n.d.",
+   "ref_type": "기타",
+   "citation": "youtube.com(n.d.). *Multi-Head Latent Attention From Scratch | One of the major DeepSeek innovation*. youtube.com, https://www.youtube.com/watch?v=NlDQUj1olXM"
+  },
+  {
+   "id": "WM25",
    "kind": "web",
    "tech": "sw",
    "title": "DeepSeek-V3 Explained, Part 1: Understanding Multi",
@@ -1237,18 +1235,40 @@
    "citation": "pub.towardsai.net(n.d.). *DeepSeek-V3 Explained, Part 1: Understanding Multi*. pub.towardsai.net, https://pub.towardsai.net/deepseek-v3-explained-part-1-understanding-multi-head-latent-attention-bac648681926"
   },
   {
-   "id": "WM28",
+   "id": "WM22",
    "kind": "web",
    "tech": "sw",
-   "title": "DeepSeek's - Multi-Head Latent Attention (MLA) | by Sulbha Jain",
-   "url": "https://sulbhajain.medium.com/deepseeks-multi-head-latent-attention-mla-00771d802ae8",
-   "site": "sulbhajain.medium.com",
+   "title": "Multi-Head Latent Attention (MLA) | LLMS3",
+   "url": "https://llms3.com/node/multi-head-latent-attention-mla",
+   "site": "LLMS3.com",
    "date": "n.d.",
    "ref_type": "기타",
-   "citation": "sulbhajain.medium.com(n.d.). *DeepSeek's - Multi-Head Latent Attention (MLA) | by Sulbha Jain*. sulbhajain.medium.com, https://sulbhajain.medium.com/deepseeks-multi-head-latent-attention-mla-00771d802ae8"
+   "citation": "LLMS3.com(n.d.). *Multi-Head Latent Attention (MLA) | LLMS3*. LLMS3.com, https://llms3.com/node/multi-head-latent-attention-mla"
+  },
+  {
+   "id": "WM26",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Multi-head Latent Attention (MLA) | deepseek-ai/DeepSeek-V3",
+   "url": "https://deepwiki.com/deepseek-ai/DeepSeek-V3/4.2-multi-head-latent-attention-(mla)",
+   "site": "DeepWiki",
+   "date": "2026-01-24",
+   "ref_type": "기타",
+   "citation": "DeepWiki(2026-01-24). *Multi-head Latent Attention (MLA) | deepseek-ai/DeepSeek-V3*. DeepWiki, https://deepwiki.com/deepseek-ai/DeepSeek-V3/4.2-multi-head-latent-attention-(mla)"
   },
   {
    "id": "WM27",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Towards Economical Inference: Enabling DeepSeek’s Multi-Head Latent Attention in Any Transformer-based LLMs",
+   "url": "https://aclanthology.org/2025.acl-long.1597.pdf",
+   "site": "ACL Anthology",
+   "date": "2025",
+   "ref_type": "논문",
+   "citation": "Ji, T. et al.(2025). Towards Economical Inference: Enabling DeepSeek’s Multi-Head Latent Attention in Any Transformer-based LLMs. *Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)*, 33313-33328."
+  },
+  {
+   "id": "WM28",
    "kind": "web",
    "tech": "sw",
    "title": "Multi-Head Latent Attention (MLA)",
@@ -1259,37 +1279,15 @@
    "citation": "Sebastian Raschka(n.d.). *Multi-Head Latent Attention (MLA)*. Sebastian Raschka, PhD, https://sebastianraschka.com/llms-from-scratch/ch04/05_mla"
   },
   {
-   "id": "WM30",
-   "kind": "web",
-   "tech": "hw",
-   "title": "How CXL Transforms RAG and KV Cache Performance",
-   "url": "https://www.asteralabs.com/breaking-through-the-memory-wall-how-cxl-transforms-rag-and-kv-cache-performance",
-   "site": "ASTERA LABS, INC.",
-   "date": "2025-11-20",
-   "ref_type": "기타",
-   "citation": "Sandeep Dattaprasad(2025-11-20). *How CXL Transforms RAG and KV Cache Performance*. ASTERA LABS, INC., https://www.asteralabs.com/breaking-through-the-memory-wall-how-cxl-transforms-rag-and-kv-cache-performance"
-  },
-  {
-   "id": "WM29",
+   "id": "WM20",
    "kind": "web",
    "tech": "sw",
-   "title": "Build DeepSeek-V3: Multi-Head Latent Attention (MLA) Architecture",
-   "url": "https://pyimagesearch.com/2026/03/16/build-deepseek-v3-multi-head-latent-attention-mla-architecture",
-   "site": "PyImageSearch",
-   "date": "2026-03-16",
-   "ref_type": "기타",
-   "citation": "Puneet Mangla(2026-03-16). *Build DeepSeek-V3: Multi-Head Latent Attention (MLA) Architecture*. PyImageSearch, https://pyimagesearch.com/2026/03/16/build-deepseek-v3-multi-head-latent-attention-mla-architecture"
-  },
-  {
-   "id": "WM31",
-   "kind": "web",
-   "tech": "hw",
-   "title": "Inference Tokenomics: How CXL Memory Expansion Improves AI Economics",
-   "url": "https://www.asteralabs.com/inference-tokenomics-how-cxl-memory-expansion-improves-ai-economics",
-   "site": "ASTERA LABS, INC.",
-   "date": "2026-03-13",
-   "ref_type": "기타",
-   "citation": "Amit Golander(2026-03-13). *Inference Tokenomics: How CXL Memory Expansion Improves AI Economics*. ASTERA LABS, INC., https://www.asteralabs.com/inference-tokenomics-how-cxl-memory-expansion-improves-ai-economics"
+   "title": "Serving Models, Fast and Slow:Optimizing Heterogeneous LLM Inferencing Workloads at Scale",
+   "url": "https://www.microsoft.com/en-us/research/publication/serving-models-fast-and-slowoptimizing-heterogeneous-llm-inferencing-workloads-at-scale",
+   "site": "Microsoft Research",
+   "date": "2026",
+   "ref_type": "논문",
+   "citation": "Jain, K. et al.(2026). Serving Models, Fast and Slow:Optimizing Heterogeneous LLM Inferencing Workloads at Scale. *ACM Sigmetrics 2026*."
   }
  ]
 }

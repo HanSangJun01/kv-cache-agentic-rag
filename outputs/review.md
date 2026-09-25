@@ -1,7 +1,7 @@
 # Review
 
 - 결과: approve (검토 통과)
-- 재작성 횟수: 0
+- 재작성 횟수: 1
 - PDF 쪽수: 6
 
 ## critical
