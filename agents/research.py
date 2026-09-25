@@ -113,6 +113,15 @@ def tech_research(state: dict) -> dict:
 
 
 # ---------------------------------------------------------------- 📊 시장성 · 🏭 도메인 평가 에이전트 (같은 절차, 다른 기준·판단 책임)
+def web_queries(c: dict, t: dict, has_paper_evidence: bool) -> list[str]:
+    """기준 c 의 웹 질의 쌍을 기술 t 의 검색어로 채운다. 웹 질의가 없는 기준은 논문 근거가 없을 때만 웹 fallback."""
+    if c["web_q"]:
+        return [q.format(search=t["search"], market=t["market"], ecosystem=t["ecosystem"]) for q in c["web_q"]]
+    if c["rag_q"] and not has_paper_evidence:
+        return [c["rag_q"].format(name=t["search"]), f"{t['search']} limitations overhead"]
+    return []
+
+
 def evaluate_perspective(state: dict, perspective: str, prefix: str) -> tuple[dict, list, list]:
     techs, domain = state["technologies"], state["domain"]
     kb = knowledge_base(techs)
@@ -140,11 +149,8 @@ def evaluate_perspective(state: dict, perspective: str, prefix: str) -> tuple[di
             ev, tr = agentic_retrieve(kb, c["rag_q"].format(name=t["name"]), tech, t["name"])
             evidence += [{**e, "label": f"(논문, {c['id']})"} for e in ev]
             traces.append({**tr, "criterion": c["id"]})
-        queries = c["web_q"] or ()
-        if c["rag_q"] and not evidence and not queries:  # 논문에 근거 없음 → 웹 fallback
-            queries = (c["rag_q"].format(name=t["search"]), f"{t['search']} limitations overhead")
-        for q in queries:
-            ev, tr = web(q.format(search=t["search"], market=t["market"]), tech, c["id"])
+        for q in web_queries(c, t, bool(evidence)):
+            ev, tr = web(q, tech, c["id"])
             evidence += ev
             traces.append(tr)
         return evidence, traces

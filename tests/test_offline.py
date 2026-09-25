@@ -4,6 +4,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from agents.research import web_queries  # noqa: E402
 from agents.report import finalize_citations, ref_map, restore_tags, route_review, rule_check  # noqa: E402
 from rag.pipeline import PAPER_TAG, format_citation, key_numbers, landing_url, parse_meta, unsupported_numbers  # noqa: E402
 
@@ -66,6 +67,19 @@ def test_source_ids_not_hardcoded():
     assert "[P-A p.1]" in restore_tags(md, src)
     critical, _ = rule_check(md, src, lambda sid, p: PAGES.get(("P-SW", p)) if sid == "P-A" else None)
     assert critical == ["[규칙] 등록되지 않았거나 형식이 틀린 출처 태그: [WX9]"], critical  # [M1] 은 태그로 오인하지 않음
+
+
+def test_web_queries_per_tech():
+    """웹 질의는 기술별 검색어로 채워진다 — HW 생태계 질의에 SW 서빙 프레임워크가 섞이지 않음."""
+    from app import TECHNOLOGIES
+    from prompts.criteria import CRITERIA
+    m3 = next(c for c in CRITERIA["market"] if c["id"] == "M3")
+    sw, hw = (web_queries(m3, TECHNOLOGIES[k], True) for k in ("sw", "hw"))
+    assert "vLLM" in sw[0] and "vLLM" not in " ".join(hw) and "CXL Consortium" in hw[0], (sw, hw)
+    assert all("{" not in q for c in CRITERIA["market"] + CRITERIA["domain"] for k in ("sw", "hw")
+               for q in web_queries(c, TECHNOLOGIES[k], False))  # 모든 자리표시자가 채워짐
+    d1 = next(c for c in CRITERIA["domain"] if c["id"] == "D1")
+    assert web_queries(d1, TECHNOLOGIES["hw"], True) == [] and len(web_queries(d1, TECHNOLOGIES["hw"], False)) == 2  # 논문 근거 없을 때만 fallback
 
 
 def test_reference_formats():

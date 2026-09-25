@@ -6,6 +6,7 @@ CONFIDENCE = ["높음", "중간", "낮음"]
 
 # evidence: paper = RAG(논문), web = 웹 검색, both = 둘 다
 # rag_q: 논문 RAG 질의 / web_q: (채택·성과, 한계·제약) 사실 위주 질의 쌍 — criticism/review/opinion 질의 금지
+# web_q 자리표시자 {search}·{market}·{ecosystem} 은 app.py TECHNOLOGIES 의 기술별 검색어로 채운다 (특정 기술 용어를 템플릿에 두지 않음)
 CRITERIA = {
     "market": [
         {"id": "M1", "name": "시장 규모·성장성", "target": "기술이 속한 시장의 규모·전망", "evidence": "web",
@@ -19,7 +20,7 @@ CRITERIA = {
         {"id": "M3", "name": "생태계 지지", "target": "지원 프레임워크, 표준화 동향(표준 규격·표준화 단체 채택)", "evidence": "both",
          "high": "복수 프레임워크 지원 또는 산업 표준 기반", "mid": "일부 커뮤니티 구현·표준 논의", "low": "독자 구현만 존재",
          "rag_q": "Which frameworks, standards, interconnects or software stacks does {name} build on or integrate with?",
-         "web_q": ("{search} support vLLM SGLang TensorRT-LLM framework standard", "{search} limitations unsupported hardware software requirements")},
+         "web_q": ("{search} {ecosystem}", "{search} limitations unsupported hardware software requirements")},  # {ecosystem}: 기술별 생태계 검색어(config)
     ],
     "domain": [
         {"id": "D1", "name": "비용 효율", "target": "같은 워크로드에 필요한 GPU·메모리 비용 절감 여지", "evidence": "paper",

@@ -18,6 +18,7 @@ TECHNOLOGIES = {
         "file": "2405.04434.pdf", "url": "https://arxiv.org/abs/2405.04434", "date": "2024",
         "citation": "DeepSeek-AI(2024). DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model. *arXiv*, 2405.04434.",
         "search": "DeepSeek Multi-head Latent Attention MLA", "market": "LLM inference serving",
+        "ecosystem": "vLLM SGLang TensorRT-LLM inference framework support",  # M3 생태계: SW 는 서빙 프레임워크 지원
         "reason": "KV cache 를 사후 압축하지 않고 어텐션 구조(Multi-head Latent Attention) 자체를 바꿔 KV cache 93.3% 감소를 보고한 기술. "
                   "공개 모델·오픈소스 서빙 스택 채택 사례가 있어 시장성 관점의 근거가 풍부하고, 재학습이 필요한 구조 변경이라 도메인 도입 관점과 대비가 뚜렷함.",
     },
@@ -27,6 +28,7 @@ TECHNOLOGIES = {
         "file": "2606.12556.pdf", "url": "https://arxiv.org/abs/2606.12556", "date": "2026",
         "citation": "Jang, H. et al.(2026). ITME: Inference Tiered Memory Expansion with Disaggregated CXL-Hybrid Memories. *arXiv*, 2606.12556.",
         "search": "CXL memory expansion LLM inference KV cache", "market": "CXL memory",
+        "ecosystem": "CXL Consortium specification Linux kernel memory tiering vendor support",  # M3 생태계: HW 는 표준·OS·벤더 지원
         "reason": "원문 KV 를 그대로 두고 CXL-Hybrid 메모리로 TB 급 바이트 주소 공간을 확장하는 방식으로, 배경에서 제시된 'CXL 메모리 방식' 진영을 대표하며 "
                   "데이터센터 공유 컨텍스트 인프라를 직접 겨냥함. 2026년 발표된 메모리 기업(SK hynix) 연구라 시장 근거가 간접적이라는 점 자체가 관점 간 차이를 드러냄.",
     },

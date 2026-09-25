@@ -136,7 +136,7 @@ graph TD
 ### State
 | Key | Type | Reducer | 작성 노드 | 설명 |
 |---|---|---|---|---|
-| `technologies` | dict | 덮어쓰기 | 입력 | 선정 기술 2건 `{"sw", "hw"}` (이름, 진영, 논문·파일, 선정 사유, 출처 ID `P-SW`/`P-HW`, citation) |
+| `technologies` | dict | 덮어쓰기 | 입력 | 선정 기술 2건 `{"sw", "hw"}` (이름, 진영, 논문·파일, 선정 사유, 출처 ID `P-SW`/`P-HW`, citation, 웹 검색어 `search`·`market`·`ecosystem`) |
 | `domain` | dict | 덮어쓰기 | 입력 | 평가 도메인 (이름, 설명) |
 | `tech_profiles` | dict | 덮어쓰기 | tech_research | 기술별 TechProfile |
 | `market_eval` | dict | 덮어쓰기 | market_eval | 기술별 PerspectiveEvaluation (M1~M3) |
