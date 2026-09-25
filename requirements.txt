@@ -1,0 +1,17 @@
+faiss-cpu==1.15.1
+langchain-community==0.4.2
+langchain-core==1.6.5
+langchain-huggingface==1.2.2
+langchain-openai==1.6.6
+langchain-text-splitters==1.1.2
+langgraph==1.2.12
+markdown==3.10.3
+pydantic==2.13.5
+pymupdf==1.28.2
+python-dotenv==1.2.3
+rank-bm25==0.2.2
+sentence-transformers==6.1.0
+tavily-python==0.8.4
+torch==2.14.0
+transformers==5.17.0
+weasyprint==70.0
