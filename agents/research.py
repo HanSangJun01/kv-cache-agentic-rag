@@ -106,7 +106,7 @@ def tech_research(state: dict) -> dict:
         return profile.model_dump(), [tr for _, tr in results] + [rtrace]
 
     out = per_tech(run, techs)
-    sources = [{"id": t["source_id"], "kind": "paper", "tech": tech, "title": t["paper"], "url": t["url"], "site": "arXiv",
+    sources = [{"id": t["source_id"], "kind": "paper", "ref_type": "논문", "tech": tech, "title": t["paper"], "url": t["url"], "site": "arXiv",
                 "date": t["date"], "citation": t["citation"]} for tech, t in techs.items()]
     return {"tech_profiles": {k: v[0] for k, v in out.items()}, "sources": sources,
             "trace": [{"node": "tech_research", **tr} for v in out.values() for tr in v[1]]}

@@ -47,21 +47,28 @@ def _j(obj) -> str:
 
 
 # ---------------------------------------------------------------- 인용 태그 ⇄ 번호 · REFERENCE
+REF_GROUPS = ["논문", "특허", "기타"]  # REFERENCE 표기 지침의 구분 순서
+
+
 def finalize_citations(draft: str, sources: list[dict]) -> str:
-    """본문 태그를 등장 순 번호로 바꾸고, 실제 인용된 출처만 REFERENCE 로 만든다. 미등록 태그는 그대로 남겨 검토에서 잡는다."""
+    """본문 태그를 번호로 바꾸고, 실제 인용된 출처만 REFERENCE 로 만든다(논문 → 특허 → 기타 소제목, 그룹 안은 첫 인용 순).
+    미등록 태그는 그대로 남겨 검토에서 잡는다."""
     by_id = {s["id"]: s for s in sources}
     body = re.split(r"\n#+\s*REFERENCE", draft)[0].rstrip()
-    order = {}
+    cited = list(dict.fromkeys(m[1] or m[3] for m in TAG_RE.finditer(body) if (m[1] or m[3]) in by_id))
+    group = lambda sid: by_id[sid].get("ref_type", "기타")
+    ordered = [sid for g in REF_GROUPS for sid in cited if group(sid) == g]
+    number = {sid: n for n, sid in enumerate(ordered, 1)}
 
     def sub(m):
         sid = m[1] or m[3]
-        if sid not in by_id:
+        if sid not in number:
             return m[0]
-        n = order.setdefault(sid, len(order) + 1)
-        return f"[{n}, p.{m[2]}]" if m[1] else f"[{n}]"
+        return f"[{number[sid]}, p.{m[2]}]" if m[1] else f"[{number[sid]}]"
 
     body = TAG_RE.sub(sub, body)
-    refs = "\n\n".join(f"[{n}] {by_id[sid]['citation']}" for sid, n in order.items())
+    refs = "\n\n".join(f"### {g}\n\n" + "\n\n".join(f"[{number[sid]}] {by_id[sid]['citation']}" for sid in ordered if group(sid) == g)
+                       for g in REF_GROUPS if any(group(sid) == g for sid in ordered))
     return f"{body}\n\n## REFERENCE\n\n{refs}\n"
 
 
@@ -129,7 +136,8 @@ body { font-family: "Apple SD Gothic Neo", "Malgun Gothic", "NanumGothic", "Noto
 h1 { font-size: 16pt; margin: 0 0 4pt; } h2 { font-size: 12.5pt; border-bottom: 1px solid #999; margin: 12pt 0 4pt; padding-bottom: 2pt; }
 h3 { font-size: 10.5pt; margin: 8pt 0 3pt; } p, li { margin: 2pt 0; } ul { padding-left: 14pt; margin: 2pt 0; }
 table { border-collapse: collapse; width: 100%; font-size: 8.3pt; margin: 4pt 0; } th, td { border: 1px solid #aaa; padding: 2pt 4pt; vertical-align: top; }
-th { background: #eee; } blockquote { border-left: 3px solid #c00; margin: 4pt 0; padding: 2pt 8pt; background: #fff3f3; }"""
+th { background: #eee; }
+em { font-style: italic; font-family: "Helvetica Neue", Arial, "Liberation Sans", "DejaVu Sans", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", sans-serif; } blockquote { border-left: 3px solid #c00; margin: 4pt 0; padding: 2pt 8pt; background: #fff3f3; }"""
 
 
 def render_pdf(md: str) -> tuple[bytes, int]:
