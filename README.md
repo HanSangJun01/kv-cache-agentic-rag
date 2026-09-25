@@ -42,39 +42,52 @@
 | Framework | LangGraph 1.2, LangChain |
 | LLM/Generator | `gpt-4.1` (temperature 0) — 조사·평가·종합·보고서 작성 |
 | LLM/Judge | `gpt-5.4-mini` (reasoning low) — 관련성 판정·Reflection·보고서 검토 |
-| Retrieval | FAISS + BM25 Hybrid (RRF, `tech` 필터) — held-out Hit Rate@5 **0.467**, MRR@10 **0.460** (아래 표) |
+| Retrieval | FAISS + BM25 Hybrid (RRF, `tech` 필터) — Hit Rate@5 **0.567**, MRR@10 **0.507** (60문항, 아래 표) |
 | Embedding | **BAAI/bge-m3** (오픈소스, 로컬 추론) |
 | Web Search | Tavily |
 | PDF | PyMuPDF(로딩), Markdown + WeasyPrint(보고서 렌더링) |
 
-### Embedding 모델 선정
-후보 3종을 아래 기준으로 거른 뒤, **이 과제의 RAG 문서 세트와 에이전트식 질의로 직접 측정**해 선정했다 (리더보드 순위는 쓰지 않음). 재현: `python -m rag.evaluate`
+### Embedding 모델 선정 — `BAAI/bge-m3` 고정
+오픈소스 후보 3종의 **특징을 이 과제 상황에 대조**해 선정하고, 파이프라인에 고정했다 (`rag/pipeline.py: EMBED_MODEL`). 리더보드 순위는 기준으로 쓰지 않았다.
 
-| 기준 | 적용 |
+**과제 상황 → 요구 사항**
+| 상황 | 요구 |
 |---|---|
-| 도메인 적합성 | 영문 기술 논문(수식·약어·수치 포함)에 대한 검색 정확도를 실측 |
-| 시퀀스 길이 | 청크 1,000자(≈250 토큰)를 자르지 않고 담을 수 있어야 함 — 세 후보 모두 충족 |
-| 차원·메모리 | 문서 240청크 규모라 1024d 도 인덱스 부담이 작음 |
-| 로컬 추론 비용 | API 비용 없는 로컬 CPU/MPS 인덱싱 시간 |
-| 라이선스 | 상업 이용 가능한 MIT / Apache-2.0 |
+| 원문이 영어 기술 논문 (수치·약어 다수) | 영어 기술 문서 검색 |
+| 산출물·평가 기준이 한국어 ("도입 용이성", "품질 유지") | 한국어 표현도 온전히 다루는 한·영 다국어 |
+| 교수자 PC 등 GPU 없는 환경에서 재현 | 로컬 추론 비용, 설정 단순성 |
+| BM25 와 Hybrid 로 사용 | 정확한 수치·약어 매칭은 BM25 담당 → 임베딩은 의미 검색 역할 |
+| 경제성 (과제 필수) | 오픈소스 · 무료 로컬 실행 · 상업 이용 가능 라이선스 |
 
-평가셋: 청크 60개에서 LLM 이 분석가식 질문을 생성 → (질문, 정답 청크) 쌍. **선정용 30문항과 최종 측정용 held-out 30문항을 분리** (`outputs/retrieval_eval_set.json`).
+**후보 특징** (모델 설정 파일·토크나이저로 확인)
+| 항목 | **BAAI/bge-m3** ✅ | Qwen/Qwen3-Embedding-0.6B | BAAI/bge-small-en-v1.5 |
+|---|---|---|---|
+| 기반 · 규모 | XLM-RoBERTa · 약 5.7억 | Qwen3 LLM · 약 6억 | BERT · 약 0.3억 |
+| 다운로드 · 차원 · 최대 길이 | 2.27GB · 1024 · 8,192 | 1.19GB · 1024 · 32,768 | 0.13GB · 384 · 512 |
+| 언어 | 다국어 (한국어 포함) | 다국어 (한국어 포함) | 영어 전용 |
+| 질의 지시문 | 불필요 | 필요 (`Instruct: …`) | 선택 |
+| 한국어 "도입 용이성과 품질 유지 관점의 한계" | **9토큰, `도입`·`품질`·`유지`·`한계` 단어 단위** | 17토큰, 바이트 단위 분해 | 34토큰, 자모 분해 + `[UNK]` |
+| 수치 "93.3% … 5.76×" | `93` `3%` `5.` `76` 덩어리 유지 | `9` `3` `.` `3` 한 자리씩 분해 | `93` `.` `3` |
+| 로컬 인덱싱 (240청크) | 46초 | 104초 | 29초 |
+| 라이선스 | MIT | Apache-2.0 | MIT |
 
-| 후보 (선정용 30문항, Dense 검색) | 규모·차원·길이·라이선스 | 인덱싱 시간 | Hit@1 | Hit@3 | Hit@5 | MRR@10 |
-|---|---|---|---|---|---|---|
-| **BAAI/bge-m3** ✅ | 568M · 1024d · 8192 tok · MIT | 46s | 0.300 | **0.533** | **0.567** | **0.416** |
-| Qwen/Qwen3-Embedding-0.6B | 596M · 1024d · 32k tok · Apache-2.0 | 104s | 0.300 | 0.433 | 0.500 | 0.389 |
-| BAAI/bge-small-en-v1.5 | 33M · 384d · 512 tok · MIT | 29s | 0.300 | 0.400 | 0.467 | 0.377 |
+**선정 근거**
+1. 한국어·영어를 모두 단어 단위로 다뤄, 한국어 평가 기준 용어와 영어 원문을 함께 다루는 이 과제에 맞음
+2. bge-small 은 가장 가볍지만 영어 전용이라 한국어가 자모로 분해되고 `[UNK]` 가 생겨 제외
+3. Qwen3 는 한국어를 지원하지만 질의마다 지시문이 필요해 설정이 늘고, 로컬 인덱싱이 2.3배 느림
+4. MIT 라이선스, 로컬 무료 실행으로 경제성 요건 충족
+- 감수하는 점: 다운로드 2.27GB 로 후보 중 가장 큼 (최초 1회, 이후 캐시)
 
-선정 사유: bge-m3 가 이 문서 세트에서 Hit@3/5·MRR 이 가장 높았고, Qwen3 대비 인덱싱이 2배 이상 빨라 로컬 재현 비용이 낮음. bge-small 은 가장 가볍지만 정확도 손실이 확인됨.
+**검색 품질** (`python -m rag.evaluate`, 고정 모델 bge-m3 기준)
+평가셋: 논문 청크 60개에서 LLM 이 분석가식 질문을 생성한 (질문, 정답 청크) 쌍 (`outputs/retrieval_eval_set.json`, 저장본 재사용 시 LLM 호출 없음).
 
-| 최종 검색기 (held-out 30문항) | Hit@1 | Hit@3 | Hit@5 | MRR@10 |
+| 검색 방식 (60문항) | Hit@1 | Hit@3 | Hit@5 | MRR@10 |
 |---|---|---|---|---|
-| Dense (bge-m3) | 0.333 | 0.433 | 0.467 | 0.390 |
-| BM25 | 0.433 | 0.600 | 0.600 | 0.522 |
-| **Hybrid (RRF, 사용 중)** | 0.400 | 0.467 | 0.467 | 0.460 |
+| Dense (bge-m3) | 0.317 | 0.483 | 0.517 | 0.403 |
+| BM25 | 0.450 | 0.567 | 0.617 | 0.532 |
+| **Hybrid (RRF, 사용 중)** | 0.433 | 0.550 | 0.567 | 0.507 |
 
-> 해석: 평가 질문이 청크 문장에서 생성돼 어휘 겹침이 많아 BM25 에 유리한 편향이 있음. 실제 에이전트 질의(추상적 질문·재작성 질의)에서 Dense 가 보완하도록 Hybrid 를 유지했고, 검색 뒤 관련성 판정·재작성 루프가 누락을 보완한다. 30문항 규모라 수치 편차가 큼.
+> 해석: 질문이 청크 문장에서 생성돼 어휘 겹침이 많아 BM25 에 유리한 편향이 있고, 정답을 청크 1개로만 인정해 관련 문단을 찾아도 오답이 되는 경우가 있음. 실제 에이전트 질의(추상적 질문·재작성 질의)는 Dense 의 의미 검색이 보완하도록 Hybrid 를 유지했고, 검색 뒤 관련성 판정·질의 재작성 루프가 누락을 한 번 더 보완한다.
 
 ## Agents
 관점 2개에 맞춘 **최소 6 에이전트 + 저장 노드 1개**. RAG loader·chunking·embedding·retriever·web search·citation·export 는 에이전트가 아닌 일반 컴포넌트(`rag/pipeline.py`, `agents/report.py` 헬퍼).
@@ -183,7 +196,7 @@ SUMMARY(½쪽 이내) → 1. 분석 배경 → 2. 기술 선정(Human 기반 직
 │   └── templates.py        # LLM 프롬프트
 ├── rag/
 │   ├── pipeline.py         # 로딩·청킹·임베딩·FAISS/BM25 Hybrid·Agentic 검색 루프·웹 검색·수치 대조
-│   └── evaluate.py         # 임베딩 후보 비교 · Hit Rate@K / MRR
+│   └── evaluate.py         # 검색 품질 측정 (Hit Rate@K / MRR, Dense·BM25·Hybrid)
 ├── tests/test_offline.py   # LLM 없이 도는 결정론 검사 (인용 변환·수치 대조·검토 규칙·분기)
 ├── outputs/                # 보고서 PDF/MD, review.md, trace.json, graph.mmd, retrieval_eval*.json
 ├── app.py                  # 입력 config · State · Graph · 실행
@@ -196,7 +209,7 @@ python3.11 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt          # WeasyPrint 는 pango 필요 (macOS: brew install pango)
 cp .env.example .env                     # OPENAI_API_KEY, TAVILY_API_KEY 입력
 python app.py                            # → outputs/RAG-Output_*.pdf, report.md, review.md, trace.json, graph.mmd
-python -m rag.evaluate                   # (선택) 임베딩 비교·검색 품질 재측정
+python -m rag.evaluate                   # (선택) 검색 품질 재측정 (LLM 호출 없음)
 python tests/test_offline.py             # (선택) 결정론 검사
 ```
 첫 실행 시 bge-m3 를 내려받고 인덱스를 `.cache/` 에 저장한다(이후 재임베딩 없음).

@@ -31,11 +31,9 @@ DATA_DIR, CACHE_DIR = ROOT / "data", ROOT / ".cache"
 
 GENERATOR_MODEL = "gpt-4.1"
 JUDGE_MODEL = "gpt-5.4-mini"  # Generator 와 다른 모델 (자기 평가 편향 회피)
-EMBED_MODEL = "BAAI/bge-m3"  # rag/evaluate.py 비교 결과로 선정 (README 참조)
-EMBED_QUERY_KWARGS = {  # 모델 카드 권장 질의 지시문
-    "Qwen/Qwen3-Embedding-0.6B": {"prompt_name": "query"},
-    "BAAI/bge-small-en-v1.5": {"prompt": "Represent this sentence for searching relevant passages: "},
-}
+# 임베딩 모델 고정 — 후보(bge-m3 / Qwen3-Embedding-0.6B / bge-small-en-v1.5) 특징 비교로 선정, 근거는 README '임베딩 모델 선정'
+# (한·영 모두 단어 단위 토큰화, 질의 지시문 불필요, 로컬 인덱싱 속도, MIT 라이선스)
+EMBED_MODEL = "BAAI/bge-m3"
 CHUNK_SIZE, CHUNK_OVERLAP = 1000, 150
 TOP_K = 5
 MAX_QUERY_REWRITE = 1
@@ -83,12 +81,10 @@ def make_chunks(technologies: dict) -> tuple[dict, list[Document]]:
 class KnowledgeBase:
     """기술별(tech) 논문 청크를 담는 인덱스. 페이지 원문도 보관해 인용 검증에 쓴다."""
 
-    def __init__(self, technologies: dict, model: str = EMBED_MODEL):
+    def __init__(self, technologies: dict):
         self.pages, self.chunks = make_chunks(technologies)
-        self.embeddings = HuggingFaceEmbeddings(
-            model_name=model, encode_kwargs={"normalize_embeddings": True},
-            query_encode_kwargs={"normalize_embeddings": True, **EMBED_QUERY_KWARGS.get(model, {})})
-        key = hashlib.md5(f"{model}{CHUNK_SIZE}{CHUNK_OVERLAP}{sorted((t['file'], tech) for tech, t in technologies.items())}".encode()).hexdigest()[:10]
+        self.embeddings = HuggingFaceEmbeddings(model_name=EMBED_MODEL, encode_kwargs={"normalize_embeddings": True})
+        key = hashlib.md5(f"{EMBED_MODEL}{CHUNK_SIZE}{CHUNK_OVERLAP}{sorted((t['file'], tech) for tech, t in technologies.items())}".encode()).hexdigest()[:10]
         path = CACHE_DIR / f"faiss-{key}"
         if path.exists():  # 재실행 시 재임베딩 안 함
             self.vs = FAISS.load_local(str(path), self.embeddings, allow_dangerous_deserialization=True)
