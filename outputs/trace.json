@@ -1,0 +1,1284 @@
+{
+ "trace": [
+  {
+   "node": "tech_research",
+   "agent_tech": "sw",
+   "question": "What problem does DeepSeek-V2 MLA address and what is its overall approach?",
+   "attempts": [
+    {
+     "query": "What problem does DeepSeek-V2 MLA address and what is its overall approach?",
+     "retrieved": [
+      "[P-SW p.29]",
+      "[P-SW p.6]",
+      "[P-SW p.1]",
+      "[P-SW p.49]",
+      "[P-SW p.6]"
+     ],
+     "relevant": [
+      "[P-SW p.6]",
+      "[P-SW p.1]",
+      "[P-SW p.6]"
+     ]
+    }
+   ],
+   "result": "3건 채택"
+  },
+  {
+   "node": "tech_research",
+   "agent_tech": "sw",
+   "question": "How does the core mechanism of DeepSeek-V2 MLA work?",
+   "attempts": [
+    {
+     "query": "How does the core mechanism of DeepSeek-V2 MLA work?",
+     "retrieved": [
+      "[P-SW p.6]",
+      "[P-SW p.6]",
+      "[P-SW p.6]",
+      "[P-SW p.29]",
+      "[P-SW p.1]"
+     ],
+     "relevant": [
+      "[P-SW p.6]",
+      "[P-SW p.6]",
+      "[P-SW p.1]"
+     ]
+    }
+   ],
+   "result": "3건 채택"
+  },
+  {
+   "node": "tech_research",
+   "agent_tech": "sw",
+   "question": "What performance results do the authors report for DeepSeek-V2 MLA?",
+   "attempts": [
+    {
+     "query": "What performance results do the authors report for DeepSeek-V2 MLA?",
+     "retrieved": [
+      "[P-SW p.6]",
+      "[P-SW p.21]",
+      "[P-SW p.1]",
+      "[P-SW p.49]",
+      "[P-SW p.21]"
+     ],
+     "relevant": [
+      "[P-SW p.21]",
+      "[P-SW p.1]",
+      "[P-SW p.21]"
+     ]
+    }
+   ],
+   "result": "3건 채택"
+  },
+  {
+   "node": "tech_research",
+   "agent_tech": "sw",
+   "question": "What experimental setup, hardware, models and baselines are used to evaluate DeepSeek-V2 MLA?",
+   "attempts": [
+    {
+     "query": "What experimental setup, hardware, models and baselines are used to evaluate DeepSeek-V2 MLA?",
+     "retrieved": [
+      "[P-SW p.21]",
+      "[P-SW p.1]",
+      "[P-SW p.4]",
+      "[P-SW p.6]",
+      "[P-SW p.12]"
+     ],
+     "relevant": [
+      "[P-SW p.1]",
+      "[P-SW p.4]",
+      "[P-SW p.12]"
+     ]
+    }
+   ],
+   "result": "3건 채택"
+  },
+  {
+   "node": "tech_research",
+   "agent_tech": "sw",
+   "question": "What limitations, overheads or trade-offs of DeepSeek-V2 MLA are stated?",
+   "attempts": [
+    {
+     "query": "What limitations, overheads or trade-offs of DeepSeek-V2 MLA are stated?",
+     "retrieved": [
+      "[P-SW p.6]",
+      "[P-SW p.21]",
+      "[P-SW p.6]",
+      "[P-SW p.29]",
+      "[P-SW p.1]"
+     ],
+     "relevant": []
+    },
+    {
+     "query": "DeepSeek-V2 MLA limitations, overhead, trade-offs, constraints, challenges, drawbacks",
+     "retrieved": [
+      "[P-SW p.6]",
+      "[P-SW p.4]",
+      "[P-SW p.21]",
+      "[P-SW p.29]",
+      "[P-SW p.1]"
+     ],
+     "relevant": []
+    }
+   ],
+   "result": "관련 근거 없음"
+  },
+  {
+   "node": "tech_research",
+   "agent_tech": "sw",
+   "question": "What is required to adopt or deploy DeepSeek-V2 MLA in practice?",
+   "attempts": [
+    {
+     "query": "What is required to adopt or deploy DeepSeek-V2 MLA in practice?",
+     "retrieved": [
+      "[P-SW p.6]",
+      "[P-SW p.1]",
+      "[P-SW p.49]",
+      "[P-SW p.21]",
+      "[P-SW p.8]"
+     ],
+     "relevant": [
+      "[P-SW p.8]"
+     ]
+    }
+   ],
+   "result": "1건 채택"
+  },
+  {
+   "node": "tech_research",
+   "agent_tech": "sw",
+   "reflection": "DeepSeek-V2 MLA",
+   "issues": [
+    "deployment_requirements의 \"128K 컨텍스트 길이, 21B 활성화 파라미터, 60 레이어, 128 헤드 등 대규모 모델 운용을 위한 하드웨어 및 소프트웨어 인프라 필요\"라는 문장은 원문에 없는 추론을 사실처럼 단정합니다. 원문은 해당 하드웨어/소프트웨어 인프라 필요성을 명시하지 않고, 모델 하이퍼파라미터와 컨텍스트 길이만 제시합니다.",
+    "overview/reportedd_results의 \"MLA는 기존 MHA 대비 93.3%의 KV 캐시 절감, 5.76배의 최대 생성 처리량 향상, 42.5%의 학습 비용 절감 효과를 보인다\" 및 \"DeepSeek-V2는 DeepSeek 67B 대비 ...\"는 결과 자체는 원문에 있으나, 원문상 이 수치는 MLA 단독의 효과가 아니라 DeepSeek-V2 전체 모델(MLA+DeepSeekMoE 포함)과 DeepSeek 67B의 비교입니다. 따라서 'MLA'에 직접 귀속시키면 대상 기술과 평가 단위가 어긋납니다."
+   ],
+   "revised": true
+  },
+  {
+   "node": "tech_research",
+   "agent_tech": "hw",
+   "question": "What problem does ITME (CXL-Hybrid 계층 메모리 확장) address and what is its overall approach?",
+   "attempts": [
+    {
+     "query": "What problem does ITME (CXL-Hybrid 계층 메모리 확장) address and what is its overall approach?",
+     "retrieved": [
+      "[P-HW p.1]",
+      "[P-HW p.1]",
+      "[P-HW p.11]",
+      "[P-HW p.10]",
+      "[P-HW p.11]"
+     ],
+     "relevant": [
+      "[P-HW p.1]",
+      "[P-HW p.1]",
+      "[P-HW p.11]",
+      "[P-HW p.11]"
+     ]
+    }
+   ],
+   "result": "4건 채택"
+  },
+  {
+   "node": "tech_research",
+   "agent_tech": "hw",
+   "question": "How does the core mechanism of ITME (CXL-Hybrid 계층 메모리 확장) work?",
+   "attempts": [
+    {
+     "query": "How does the core mechanism of ITME (CXL-Hybrid 계층 메모리 확장) work?",
+     "retrieved": [
+      "[P-HW p.2]",
+      "[P-HW p.3]",
+      "[P-HW p.8]",
+      "[P-HW p.7]",
+      "[P-HW p.1]"
+     ],
+     "relevant": [
+      "[P-HW p.2]",
+      "[P-HW p.3]",
+      "[P-HW p.8]",
+      "[P-HW p.7]",
+      "[P-HW p.1]"
+     ]
+    }
+   ],
+   "result": "5건 채택"
+  },
+  {
+   "node": "tech_research",
+   "agent_tech": "hw",
+   "question": "What performance results do the authors report for ITME (CXL-Hybrid 계층 메모리 확장)?",
+   "attempts": [
+    {
+     "query": "What performance results do the authors report for ITME (CXL-Hybrid 계층 메모리 확장)?",
+     "retrieved": [
+      "[P-HW p.9]",
+      "[P-HW p.10]",
+      "[P-HW p.9]",
+      "[P-HW p.3]",
+      "[P-HW p.11]"
+     ],
+     "relevant": [
+      "[P-HW p.9]",
+      "[P-HW p.9]",
+      "[P-HW p.11]"
+     ]
+    }
+   ],
+   "result": "3건 채택"
+  },
+  {
+   "node": "tech_research",
+   "agent_tech": "hw",
+   "question": "What experimental setup, hardware, models and baselines are used to evaluate ITME (CXL-Hybrid 계층 메모리 확장)?",
+   "attempts": [
+    {
+     "query": "What experimental setup, hardware, models and baselines are used to evaluate ITME (CXL-Hybrid 계층 메모리 확장)?",
+     "retrieved": [
+      "[P-HW p.9]",
+      "[P-HW p.10]",
+      "[P-HW p.2]",
+      "[P-HW p.9]",
+      "[P-HW p.11]"
+     ],
+     "relevant": [
+      "[P-HW p.9]",
+      "[P-HW p.10]",
+      "[P-HW p.9]",
+      "[P-HW p.11]"
+     ]
+    }
+   ],
+   "result": "4건 채택"
+  },
+  {
+   "node": "tech_research",
+   "agent_tech": "hw",
+   "question": "What limitations, overheads or trade-offs of ITME (CXL-Hybrid 계층 메모리 확장) are stated?",
+   "attempts": [
+    {
+     "query": "What limitations, overheads or trade-offs of ITME (CXL-Hybrid 계층 메모리 확장) are stated?",
+     "retrieved": [
+      "[P-HW p.10]",
+      "[P-HW p.6]",
+      "[P-HW p.11]",
+      "[P-HW p.2]",
+      "[P-HW p.2]"
+     ],
+     "relevant": [
+      "[P-HW p.6]"
+     ]
+    }
+   ],
+   "result": "1건 채택"
+  },
+  {
+   "node": "tech_research",
+   "agent_tech": "hw",
+   "question": "What is required to adopt or deploy ITME (CXL-Hybrid 계층 메모리 확장) in practice?",
+   "attempts": [
+    {
+     "query": "What is required to adopt or deploy ITME (CXL-Hybrid 계층 메모리 확장) in practice?",
+     "retrieved": [
+      "[P-HW p.11]",
+      "[P-HW p.9]",
+      "[P-HW p.2]",
+      "[P-HW p.1]",
+      "[P-HW p.1]"
+     ],
+     "relevant": [
+      "[P-HW p.2]",
+      "[P-HW p.1]"
+     ]
+    }
+   ],
+   "result": "2건 채택"
+  },
+  {
+   "node": "tech_research",
+   "agent_tech": "hw",
+   "reflection": "ITME (CXL-Hybrid 계층 메모리 확장)",
+   "issues": [],
+   "revised": false
+  },
+  {
+   "node": "domain_eval",
+   "agent_tech": "sw",
+   "question": "How much GPU memory, KV cache size or hardware cost does DeepSeek-V2 MLA save, and what extra cost does it require?",
+   "attempts": [
+    {
+     "query": "How much GPU memory, KV cache size or hardware cost does DeepSeek-V2 MLA save, and what extra cost does it require?",
+     "retrieved": [
+      "[P-SW p.16]",
+      "[P-SW p.1]",
+      "[P-SW p.29]",
+      "[P-SW p.43]",
+      "[P-SW p.1]"
+     ],
+     "relevant": [
+      "[P-SW p.1]",
+      "[P-SW p.1]"
+     ]
+    }
+   ],
+   "result": "2건 채택",
+   "criterion": "D1"
+  },
+  {
+   "node": "domain_eval",
+   "agent_tech": "sw",
+   "question": "What throughput, latency or time-to-first-token results does DeepSeek-V2 MLA report, under which batch and context conditions?",
+   "attempts": [
+    {
+     "query": "What throughput, latency or time-to-first-token results does DeepSeek-V2 MLA report, under which batch and context conditions?",
+     "retrieved": [
+      "[P-SW p.1]",
+      "[P-SW p.29]",
+      "[P-SW p.6]",
+      "[P-SW p.21]",
+      "[P-SW p.16]"
+     ],
+     "relevant": [
+      "[P-SW p.1]",
+      "[P-SW p.21]",
+      "[P-SW p.16]"
+     ]
+    }
+   ],
+   "result": "3건 채택",
+   "criterion": "D2"
+  },
+  {
+   "node": "domain_eval",
+   "agent_tech": "sw",
+   "question": "What accuracy or benchmark quality results are reported for DeepSeek-V2 MLA compared with the baseline?",
+   "attempts": [
+    {
+     "query": "What accuracy or benchmark quality results are reported for DeepSeek-V2 MLA compared with the baseline?",
+     "retrieved": [
+      "[P-SW p.15]",
+      "[P-SW p.29]",
+      "[P-SW p.1]",
+      "[P-SW p.20]",
+      "[P-SW p.21]"
+     ],
+     "relevant": [
+      "[P-SW p.15]",
+      "[P-SW p.1]",
+      "[P-SW p.21]"
+     ]
+    }
+   ],
+   "result": "3건 채택",
+   "criterion": "D3"
+  },
+  {
+   "node": "domain_eval",
+   "agent_tech": "sw",
+   "question": "What hardware, system software, kernel or model changes are required to deploy DeepSeek-V2 MLA?",
+   "attempts": [
+    {
+     "query": "What hardware, system software, kernel or model changes are required to deploy DeepSeek-V2 MLA?",
+     "retrieved": [
+      "[P-SW p.1]",
+      "[P-SW p.48]",
+      "[P-SW p.6]",
+      "[P-SW p.49]",
+      "[P-SW p.29]"
+     ],
+     "relevant": [
+      "[P-SW p.6]",
+      "[P-SW p.29]"
+     ]
+    }
+   ],
+   "result": "2건 채택",
+   "criterion": "D4"
+  },
+  {
+   "node": "domain_eval",
+   "agent_tech": "sw",
+   "criterion": "D4",
+   "web_query": "DeepSeek Multi-head Latent Attention MLA integration existing inference serving stack",
+   "results": [
+    "WD4",
+    "WD5",
+    "WD9"
+   ]
+  },
+  {
+   "node": "domain_eval",
+   "agent_tech": "sw",
+   "criterion": "D4",
+   "web_query": "DeepSeek Multi-head Latent Attention MLA deployment requirements hardware overhead",
+   "results": [
+    "WD10",
+    "WD11",
+    "WD12"
+   ]
+  },
+  {
+   "node": "domain_eval",
+   "agent_tech": "sw",
+   "reflection": "DeepSeek-V2 MLA",
+   "issues": [
+    "근거 목록에 없는 출처 태그 [P-SW p.8]",
+    "D1 근거 문장: “이는 추가 하드웨어 투자 없이 수용량 확대가 가능함을 의미함 [P-SW p.1][P-SW p.21][P-SW p.16].” — 원문은 KV 캐시 감소와 처리량 증가를 보고할 뿐, ‘추가 하드웨어 투자 없이’ 또는 ‘수용량 확대가 가능’하다고 단정하지 않는다.",
+    "D2 근거 문장: “MLA 구조와 KV 캐시 압축, FP8 변환, 6bit 양자화 등으로 실제 서빙 환경에서 처리량이 5.76배 증가하고, 대규모 동시 요청을 효율적으로 처리할 수 있음이 … [P-SW p.16][P-SW p.21].” — 원문에는 5.76배 최대 생성 처리량과 prompt input throughput 수치만 있으며, ‘대규모 동시 요청을 효율적으로 처리’나 지연/동시성 개선은 직접 제시되지 않는다.",
+    "D3 근거 문장: “정확도 벤치마크(MMLU, CHID, CCPM 등)에서 DeepSeek-V2는 오픈소스 모델 중 최고 수준의 성능을 보이며, MLA 적용에 따른 품질 손실이 수치상 확인되지 않음 … [P-SW p.15].” — 원문은 DeepSeek-V2와 타 모델의 비교 성능만 제시하며, MLA 적용 전후의 품질 손실 여부는 측정하지 않는다. 따라서 ‘MLA 적용에 따른 품질 손실이 없다’는 결론은 뒷받침되지 않는다.",
+    "D4 근거 문장: “MLA는 기존 MHA 대비 KV 캐시 구조 변경이 필요하며, (dc+dh^R)l 형태로 구현되어야 함. … 기존 서빙 스택에 소프트웨어 레벨에서 통합 가능 … [P-SW p.8][WD4][WD5][WD9].” — 제시된 원문들에는 (dc+dh^R)l 구현 형태가 없고, 또한 외부 문서(WD4/WD5/WD9)는 MLA 일반 설명이지 DeepSeek-V2 논문 원문 근거가 아니다. ‘기존 서빙 스택에 소프트웨어 레벨에서 통합 가능’도 구체적 평가 근거로는 부족하다."
+   ],
+   "revised": true
+  },
+  {
+   "node": "domain_eval",
+   "agent_tech": "hw",
+   "question": "How much GPU memory, KV cache size or hardware cost does ITME (CXL-Hybrid 계층 메모리 확장) save, and what extra cost does it require?",
+   "attempts": [
+    {
+     "query": "How much GPU memory, KV cache size or hardware cost does ITME (CXL-Hybrid 계층 메모리 확장) save, and what extra cost does it require?",
+     "retrieved": [
+      "[P-HW p.9]",
+      "[P-HW p.1]",
+      "[P-HW p.6]",
+      "[P-HW p.11]",
+      "[P-HW p.7]"
+     ],
+     "relevant": [
+      "[P-HW p.9]",
+      "[P-HW p.1]",
+      "[P-HW p.6]",
+      "[P-HW p.11]",
+      "[P-HW p.7]"
+     ]
+    }
+   ],
+   "result": "5건 채택",
+   "criterion": "D1"
+  },
+  {
+   "node": "domain_eval",
+   "agent_tech": "hw",
+   "question": "What throughput, latency or time-to-first-token results does ITME (CXL-Hybrid 계층 메모리 확장) report, under which batch and context conditions?",
+   "attempts": [
+    {
+     "query": "What throughput, latency or time-to-first-token results does ITME (CXL-Hybrid 계층 메모리 확장) report, under which batch and context conditions?",
+     "retrieved": [
+      "[P-HW p.10]",
+      "[P-HW p.9]",
+      "[P-HW p.2]",
+      "[P-HW p.11]",
+      "[P-HW p.11]"
+     ],
+     "relevant": [
+      "[P-HW p.10]",
+      "[P-HW p.9]",
+      "[P-HW p.11]",
+      "[P-HW p.11]"
+     ]
+    }
+   ],
+   "result": "4건 채택",
+   "criterion": "D2"
+  },
+  {
+   "node": "domain_eval",
+   "agent_tech": "hw",
+   "question": "What accuracy or benchmark quality results are reported for ITME (CXL-Hybrid 계층 메모리 확장) compared with the baseline?",
+   "attempts": [
+    {
+     "query": "What accuracy or benchmark quality results are reported for ITME (CXL-Hybrid 계층 메모리 확장) compared with the baseline?",
+     "retrieved": [
+      "[P-HW p.9]",
+      "[P-HW p.9]",
+      "[P-HW p.10]",
+      "[P-HW p.9]",
+      "[P-HW p.11]"
+     ],
+     "relevant": [
+      "[P-HW p.9]",
+      "[P-HW p.9]",
+      "[P-HW p.11]"
+     ]
+    }
+   ],
+   "result": "3건 채택",
+   "criterion": "D3"
+  },
+  {
+   "node": "domain_eval",
+   "agent_tech": "hw",
+   "question": "What hardware, system software, kernel or model changes are required to deploy ITME (CXL-Hybrid 계층 메모리 확장)?",
+   "attempts": [
+    {
+     "query": "What hardware, system software, kernel or model changes are required to deploy ITME (CXL-Hybrid 계층 메모리 확장)?",
+     "retrieved": [
+      "[P-HW p.1]",
+      "[P-HW p.2]",
+      "[P-HW p.5]",
+      "[P-HW p.11]",
+      "[P-HW p.10]"
+     ],
+     "relevant": [
+      "[P-HW p.2]",
+      "[P-HW p.5]",
+      "[P-HW p.11]"
+     ]
+    }
+   ],
+   "result": "3건 채택",
+   "criterion": "D4"
+  },
+  {
+   "node": "domain_eval",
+   "agent_tech": "hw",
+   "criterion": "D4",
+   "web_query": "CXL memory expansion LLM inference KV cache integration existing inference serving stack",
+   "results": [
+    "WD1",
+    "WD2",
+    "WD3"
+   ]
+  },
+  {
+   "node": "domain_eval",
+   "agent_tech": "hw",
+   "criterion": "D4",
+   "web_query": "CXL memory expansion LLM inference KV cache deployment requirements hardware overhead",
+   "results": [
+    "WD6",
+    "WD7",
+    "WD8"
+   ]
+  },
+  {
+   "node": "domain_eval",
+   "agent_tech": "hw",
+   "reflection": "ITME (CXL-Hybrid 계층 메모리 확장)",
+   "issues": [
+    "근거 목록에 없는 출처 태그 [P-HW p.3]",
+    "근거 목록에 없는 출처 태그 [P-HW p.8]",
+    "D4의 rating을 '중간'으로 둔 것은 루브릭과 맞지 않습니다. 원문은 ITME 검증에 production-grade SK hynix CMM, PCIe Gen5 NVMe SSD, RDMA 기반 연결 등 신규 하드웨어/인프라가 필요함을 명시하므로, 도입 용이성은 '낮음'에 가깝습니다. [P-HW p.1][P-HW p.8][P-HW p.11]",
+    "D3 rationale의 '설계상 정확도 손실 요인은 없다'는 진술은 원문에 근거가 없습니다. 제공된 원문에는 정확도/품질 벤치마크 결과가 없고, 메모리 확장·prefetch 구조만 설명되어 있어 품질 유지 여부를 단정할 수 없습니다.",
+    "D3 rationale의 '논문에서 정확도 벤치마크 결과나 출력 품질에 대한 수치적 평가가 보고되지 않아'도, 제시된 원문 범위만으로는 전 페이지를 모두 검증한 것이 아니어서 단정형 사실로 쓰기에는 근거가 부족합니다. 특히 이는 '부재'를 근거로 한 판단이라 인용이 명시되지 않으면 검증 가능한 주장으로 보기 어렵습니다.",
+    "D2 rationale의 '특정 조건(충분한 DRAM cache, 네트워크 대역폭)에서만 최적 성능이 보장된다'는 표현은 원문보다 강합니다. 원문은 DRAM cache capacity에 대한 민감도와 성능 저하를 설명하지만, '네트워크 대역폭'이 최적 성능의 조건으로 직접 제시되지는 않습니다. [P-HW p.10]"
+   ],
+   "revised": true
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "sw",
+   "criterion": "M1",
+   "web_query": "LLM inference serving market size growth forecast",
+   "results": [
+    "WM28",
+    "WM29",
+    "WM30"
+   ]
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "sw",
+   "criterion": "M1",
+   "web_query": "LLM inference serving market demand slowdown constraints data",
+   "results": [
+    "WM31",
+    "WM32",
+    "WM28"
+   ]
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "sw",
+   "question": "Is DeepSeek-V2 MLA deployed in a product or service, or released as open-source code or checkpoints?",
+   "attempts": [
+    {
+     "query": "Is DeepSeek-V2 MLA deployed in a product or service, or released as open-source code or checkpoints?",
+     "retrieved": [
+      "[P-SW p.5]",
+      "[P-SW p.1]",
+      "[P-SW p.15]",
+      "[P-SW p.4]",
+      "[P-SW p.16]"
+     ],
+     "relevant": [
+      "[P-SW p.5]",
+      "[P-SW p.4]",
+      "[P-SW p.16]"
+     ]
+    }
+   ],
+   "result": "3건 채택",
+   "criterion": "M2"
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "sw",
+   "criterion": "M2",
+   "web_query": "DeepSeek Multi-head Latent Attention MLA adoption production deployment product launch",
+   "results": [
+    "WM13",
+    "WM22",
+    "WM24"
+   ]
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "sw",
+   "criterion": "M2",
+   "web_query": "DeepSeek Multi-head Latent Attention MLA deployment requirements compatibility constraints",
+   "results": [
+    "WM25",
+    "WM26",
+    "WM27"
+   ]
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "sw",
+   "question": "Which frameworks, standards, interconnects or software stacks does DeepSeek-V2 MLA build on or integrate with?",
+   "attempts": [
+    {
+     "query": "Which frameworks, standards, interconnects or software stacks does DeepSeek-V2 MLA build on or integrate with?",
+     "retrieved": [
+      "[P-SW p.29]",
+      "[P-SW p.15]",
+      "[P-SW p.6]",
+      "[P-SW p.1]",
+      "[P-SW p.6]"
+     ],
+     "relevant": [
+      "[P-SW p.6]",
+      "[P-SW p.1]",
+      "[P-SW p.6]"
+     ]
+    }
+   ],
+   "result": "3건 채택",
+   "criterion": "M3"
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "sw",
+   "criterion": "M3",
+   "web_query": "DeepSeek Multi-head Latent Attention MLA support vLLM SGLang TensorRT-LLM framework standard",
+   "results": [
+    "WM4",
+    "WM5",
+    "WM6"
+   ]
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "sw",
+   "criterion": "M3",
+   "web_query": "DeepSeek Multi-head Latent Attention MLA limitations unsupported hardware software requirements",
+   "results": [
+    "WM17",
+    "WM18",
+    "WM19"
+   ]
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "sw",
+   "reflection": "DeepSeek-V2 MLA",
+   "issues": [
+    "M1 근거 문장 중 \"글로벌 cross-platform LLM inference engine 시장은 2025년 38억 달러에서 2034년 286억 달러로 연평균 25.2% 성장 전망\"은 제시된 원문(WM28)에서 확인되지 않는다. WM28은 인퍼런스 수요/배포 형태를 설명할 뿐 해당 시장 규모 수치를 주지 않는다.",
+    "M1 근거 문장 중 \"대규모 동시 요청, 실시간 추론, GPU 비용 절감 등 시장 내 주요 요구사항이 명확히 존재함\"은 시장 리포트 수치가 아니라 일반적인 서술을 시장 성장 근거처럼 단정한 것으로, 인용 원문들에서 해당 문장을 직접 뒷받침하지 않는다.",
+    "M2 근거 문장 중 \"vLLM, SGLang, LMDeploy, TensorRT-LLM 등 주요 오픈소스 LLM 서빙 프레임워크에서 MLA 최적화 커널 공식 지원\"은 과장되었다. WM4, WM5, WM6은 vLLM/SGLang/TensorRT-LLM의 MLA 지원을 말하지만, WM6의 LMDeploy는 MLA 지원이 아니라 FP8/BF16 inference만 언급한다.",
+    "M2 근거 문장 중 \"DeepSeek-V2, V3, R1 등 주요 모델의 프로덕션 서빙 아키텍처로 MLA가 사용됨\"은 WM24/WM26 등에서 V3 계열 구현은 확인되지만, R1에 대한 직접적인 MLA 서빙 아키텍처 근거는 제시된 원문만으로는 충분하지 않다.",
+    "M3 근거 문장 중 \"MLA는 DeepSeek 계열 외에도 frontier-MoE ecosystem 등에서 채택되고 있음\"은 WM22의 블로그성 주장에 가깝고, WM24는 DeepSeek-V3 구현 문서일 뿐이라 제시된 원문만으로는 '브로드한 생태계 채택'을 확인하기 어렵다.",
+    "M3 근거 문장 중 \"MLA가 오픈소스 커뮤니티에서 활발히 개발·배포됨\"은 일부 프레임워크 지원(WM4/WM5/WM6)과는 구분해야 한다. 원문은 특정 프레임워크의 지원을 말할 뿐, 커뮤니티 전반의 활발한 개발·배포 수준까지 직접 입증하지 않는다.",
+    "overall_view의 \"업계 사실상 표준으로 확산되는 추세\"는 제시된 원문에 공식 표준화 채택이나 업계 표준 인정 근거가 없어 단정이다."
+   ],
+   "revised": true
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "hw",
+   "criterion": "M1",
+   "web_query": "CXL memory market size growth forecast",
+   "results": [
+    "WM1",
+    "WM2",
+    "WM3"
+   ]
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "hw",
+   "criterion": "M1",
+   "web_query": "CXL memory market demand slowdown constraints data",
+   "results": [
+    "WM8",
+    "WM1",
+    "WM11"
+   ]
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "hw",
+   "question": "Is ITME (CXL-Hybrid 계층 메모리 확장) deployed in a product or service, or released as open-source code or checkpoints?",
+   "attempts": [
+    {
+     "query": "Is ITME (CXL-Hybrid 계층 메모리 확장) deployed in a product or service, or released as open-source code or checkpoints?",
+     "retrieved": [
+      "[P-HW p.11]",
+      "[P-HW p.11]",
+      "[P-HW p.2]",
+      "[P-HW p.10]",
+      "[P-HW p.11]"
+     ],
+     "relevant": [
+      "[P-HW p.11]",
+      "[P-HW p.2]",
+      "[P-HW p.11]"
+     ]
+    }
+   ],
+   "result": "3건 채택",
+   "criterion": "M2"
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "hw",
+   "criterion": "M2",
+   "web_query": "CXL memory expansion LLM inference KV cache adoption production deployment product launch",
+   "results": [
+    "WM7",
+    "WM14",
+    "WM15"
+   ]
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "hw",
+   "criterion": "M2",
+   "web_query": "CXL memory expansion LLM inference KV cache deployment requirements compatibility constraints",
+   "results": [
+    "WM14",
+    "WM15",
+    "WM23"
+   ]
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "hw",
+   "question": "Which frameworks, standards, interconnects or software stacks does ITME (CXL-Hybrid 계층 메모리 확장) build on or integrate with?",
+   "attempts": [
+    {
+     "query": "Which frameworks, standards, interconnects or software stacks does ITME (CXL-Hybrid 계층 메모리 확장) build on or integrate with?",
+     "retrieved": [
+      "[P-HW p.2]",
+      "[P-HW p.11]",
+      "[P-HW p.1]",
+      "[P-HW p.7]",
+      "[P-HW p.4]"
+     ],
+     "relevant": [
+      "[P-HW p.2]",
+      "[P-HW p.1]",
+      "[P-HW p.7]",
+      "[P-HW p.4]"
+     ]
+    }
+   ],
+   "result": "4건 채택",
+   "criterion": "M3"
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "hw",
+   "criterion": "M3",
+   "web_query": "CXL memory expansion LLM inference KV cache support vLLM SGLang TensorRT-LLM framework standard",
+   "results": [
+    "WM9",
+    "WM10",
+    "WM12"
+   ]
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "hw",
+   "criterion": "M3",
+   "web_query": "CXL memory expansion LLM inference KV cache limitations unsupported hardware software requirements",
+   "results": [
+    "WM16",
+    "WM20",
+    "WM21"
+   ]
+  },
+  {
+   "node": "market_eval",
+   "agent_tech": "hw",
+   "reflection": "ITME (CXL-Hybrid 계층 메모리 확장)",
+   "issues": [
+    "근거 목록에 없는 출처 태그 [P-HW p.8]",
+    "근거 목록에 없는 출처 태그 [P-HW p.9]",
+    "M3의 rationale 첫 문장: \"vLLM, TensorRT-LLM, SGLang 등 주요 LLM 서빙 프레임워크에서 CXL 기반 KV cache 오프로딩, 메모리 확장 지원 논의 및 일부 구현 진행 중\"은 원문으로 충분히 뒷받침되지 않습니다. 제공된 원문 중 CXL/메모리 확장 관련 명시적 근거는 주로 WM16의 \"vLLM CXL support (in development)\" 정도이며, TensorRT-LLM과 SGLang까지 함께 CXL 기반 오프로딩/메모리 확장 구현이 진행 중이라고 말할 근거는 없습니다.\",\"M3의 rationale 두 번째 문장: \"Astera Labs Leo CXL 컨트롤러는 vLLM, TensorRT-LLM, SGLang 등과 호환성 강조\"는 WM9에 의해 부분적으로만 뒷받침되지만, 이 문맥에서 이를 'CXL 메모리 확장 생태계의 지원 프레임워크/표준화 동향' 근거로 일반화한 것은 과도합니다. WM9은 단지 Leo의 배포가 기존 inference frameworks와 통합된다고 말할 뿐, ITME 또는 CXL-hybrid 메모리 자체가 해당 프레임워크들에 공식 지원되거나 표준화되었다는 근거는 아닙니다."
+   ],
+   "revised": true
+  }
+ ],
+ "sources": [
+  {
+   "id": "P-SW",
+   "kind": "paper",
+   "tech": "sw",
+   "title": "DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model",
+   "url": "https://arxiv.org/abs/2405.04434",
+   "site": "arXiv",
+   "date": "2024",
+   "citation": "DeepSeek-AI(2024). DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model. arXiv, 2405.04434."
+  },
+  {
+   "id": "P-HW",
+   "kind": "paper",
+   "tech": "hw",
+   "title": "ITME: Inference Tiered Memory Expansion with Disaggregated CXL-Hybrid Memories",
+   "url": "https://arxiv.org/abs/2606.12556",
+   "site": "arXiv",
+   "date": "2026",
+   "citation": "Jang, H. et al.(2026). ITME: Inference Tiered Memory Expansion with Disaggregated CXL-Hybrid Memories. arXiv, 2606.12556."
+  },
+  {
+   "id": "WD1",
+   "kind": "web",
+   "tech": "hw",
+   "title": "Exploring CXL-based KV Cache Storage for LLM Serving Yupeng Tang1∗",
+   "url": "https://mlforsystems.org/assets/papers/neurips2024/paper17.pdf",
+   "site": "mlforsystems.org",
+   "date": "n.d.",
+   "citation": "mlforsystems.org(n.d.). Exploring CXL-based KV Cache Storage for LLM Serving Yupeng Tang1∗. mlforsystems.org, https://mlforsystems.org/assets/papers/neurips2024/paper17.pdf"
+  },
+  {
+   "id": "WD2",
+   "kind": "web",
+   "tech": "hw",
+   "title": "Boosting LLM inference with CXL-PNM: A scalable solution ...",
+   "url": "https://www.linkedin.com/posts/jungwook-choi-5854996b_scalable-processing-near-memory-for-1m-token-activity-7391589002497155073-0iI7",
+   "site": "LinkedIn",
+   "date": "2025-11-04",
+   "citation": "LinkedIn(2025-11-04). Boosting LLM inference with CXL-PNM: A scalable solution .... LinkedIn, https://www.linkedin.com/posts/jungwook-choi-5854996b_scalable-processing-near-memory-for-1m-token-activity-7391589002497155073-0iI7"
+  },
+  {
+   "id": "WD3",
+   "kind": "web",
+   "tech": "hw",
+   "title": "How CXL Memory Expansion Improves AI Economics",
+   "url": "https://www.asteralabs.com/resources/blog/inference-tokenomics-how-cxl-memory-expansion-improves-ai-economics",
+   "site": "ASTERA LABS, INC.",
+   "date": "2026-03-13",
+   "citation": "Amit Golander(2026-03-13). How CXL Memory Expansion Improves AI Economics. ASTERA LABS, INC., https://www.asteralabs.com/resources/blog/inference-tokenomics-how-cxl-memory-expansion-improves-ai-economics"
+  },
+  {
+   "id": "WD4",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Enabling DeepSeek's Multi-Head Latent Attention in Any ...",
+   "url": "https://aclanthology.org/2025.acl-long.1597",
+   "site": "ACL Anthology",
+   "date": "n.d.",
+   "citation": "ACL Anthology(n.d.). Enabling DeepSeek's Multi-Head Latent Attention in Any .... ACL Anthology, https://aclanthology.org/2025.acl-long.1597"
+  },
+  {
+   "id": "WD6",
+   "kind": "web",
+   "tech": "hw",
+   "title": "How CXL Transforms RAG and KV Cache Performance",
+   "url": "https://www.asteralabs.com/resources/blog/breaking-through-the-memory-wall-how-cxl-transforms-rag-and-kv-cache-performance",
+   "site": "ASTERA LABS, INC.",
+   "date": "2025-11-20",
+   "citation": "Sandeep Dattaprasad(2025-11-20). How CXL Transforms RAG and KV Cache Performance. ASTERA LABS, INC., https://www.asteralabs.com/resources/blog/breaking-through-the-memory-wall-how-cxl-transforms-rag-and-kv-cache-performance"
+  },
+  {
+   "id": "WD7",
+   "kind": "web",
+   "tech": "hw",
+   "title": "How We Solved the KV Cache Bottleneck in LLM Inference ...",
+   "url": "https://medium.com/@jooho.lee_93960/how-we-solved-the-kv-cache-bottleneck-in-llm-inference-with-cxl-shared-memory-d5133dcfb044",
+   "site": "medium.com",
+   "date": "n.d.",
+   "citation": "medium.com(n.d.). How We Solved the KV Cache Bottleneck in LLM Inference .... medium.com, https://medium.com/@jooho.lee_93960/how-we-solved-the-kv-cache-bottleneck-in-llm-inference-with-cxl-shared-memory-d5133dcfb044"
+  },
+  {
+   "id": "WD5",
+   "kind": "web",
+   "tech": "sw",
+   "title": "junfanz1/MiniGPT-and-DeepSeek-MLA-Multi-Head-Latent ...",
+   "url": "https://github.com/junfanz1/MiniGPT-and-DeepSeek-MLA-Multi-Head-Latent-Attention",
+   "site": "GitHub",
+   "date": "n.d.",
+   "citation": "GitHub(n.d.). junfanz1/MiniGPT-and-DeepSeek-MLA-Multi-Head-Latent .... GitHub, https://github.com/junfanz1/MiniGPT-and-DeepSeek-MLA-Multi-Head-Latent-Attention"
+  },
+  {
+   "id": "WD8",
+   "kind": "web",
+   "tech": "hw",
+   "title": "Breaking AI Memory Limits with CXL Memory Pooling",
+   "url": "https://semiconductor.samsung.com/news-events/tech-blog/breaking-ai-memory-limits-with-cxl-memory-pooling",
+   "site": "Samsung Semiconductor Global",
+   "date": "2026-09-04",
+   "citation": "Samsung Semiconductor Global(2026-09-04). Breaking AI Memory Limits with CXL Memory Pooling. Samsung Semiconductor Global, https://semiconductor.samsung.com/news-events/tech-blog/breaking-ai-memory-limits-with-cxl-memory-pooling"
+  },
+  {
+   "id": "WD9",
+   "kind": "web",
+   "tech": "sw",
+   "title": "MLA Chapter 4 Guide | Sebastian Raschka, PhD",
+   "url": "https://sebastianraschka.com/llms-from-scratch/ch04/05_mla",
+   "site": "Sebastian Raschka, PhD",
+   "date": "n.d.",
+   "citation": "Sebastian Raschka(n.d.). MLA Chapter 4 Guide | Sebastian Raschka, PhD. Sebastian Raschka, PhD, https://sebastianraschka.com/llms-from-scratch/ch04/05_mla"
+  },
+  {
+   "id": "WD10",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Hardware-Centric Analysis of DeepSeek's Multi-Head ...",
+   "url": "https://arxiv.org/pdf/2506.02523",
+   "site": "arxiv.org",
+   "date": "n.d.",
+   "citation": "arxiv.org(n.d.). Hardware-Centric Analysis of DeepSeek's Multi-Head .... arxiv.org, https://arxiv.org/pdf/2506.02523"
+  },
+  {
+   "id": "WD11",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Build DeepSeek-V3: Multi-Head Latent Attention (MLA) ...",
+   "url": "https://pyimagesearch.com/2026/03/16/build-deepseek-v3-multi-head-latent-attention-mla-architecture",
+   "site": "PyImageSearch",
+   "date": "2026-03-16",
+   "citation": "Puneet Mangla(2026-03-16). Build DeepSeek-V3: Multi-Head Latent Attention (MLA) .... PyImageSearch, https://pyimagesearch.com/2026/03/16/build-deepseek-v3-multi-head-latent-attention-mla-architecture"
+  },
+  {
+   "id": "WD12",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Multi-Head Latent Attention From Scratch | One of the major ...",
+   "url": "https://www.youtube.com/watch?v=NlDQUj1olXM",
+   "site": "youtube.com",
+   "date": "n.d.",
+   "citation": "youtube.com(n.d.). Multi-Head Latent Attention From Scratch | One of the major .... youtube.com, https://www.youtube.com/watch?v=NlDQUj1olXM"
+  },
+  {
+   "id": "WM1",
+   "kind": "web",
+   "tech": "hw",
+   "title": "CXL Memory Module Market Research Report 2034",
+   "url": "https://dataintelo.com/report/cxl-memory-module-market",
+   "site": "dataintelo.com",
+   "date": "2025-09-30",
+   "citation": "Dataintelo(2025-09-30). CXL Memory Module Market Research Report 2034. dataintelo.com, https://dataintelo.com/report/cxl-memory-module-market"
+  },
+  {
+   "id": "WM2",
+   "kind": "web",
+   "tech": "hw",
+   "title": "CXL Memory Expansion Market Growth, Forecast Report 2035",
+   "url": "https://www.sphericalinsights.com/reports/cxl-memory-expansion-market",
+   "site": "Spherical Insights",
+   "date": "n.d.",
+   "citation": "Spherical Insights(n.d.). CXL Memory Expansion Market Growth, Forecast Report 2035. Spherical Insights, https://www.sphericalinsights.com/reports/cxl-memory-expansion-market"
+  },
+  {
+   "id": "WM3",
+   "kind": "web",
+   "tech": "hw",
+   "title": "CXL Memory Pooling Appliance Market Size, Share [2026- ...",
+   "url": "https://www.fortunebusinessinsights.com/cxl-memory-pooling-appliance-market-117960",
+   "site": "fortunebusinessinsights.com",
+   "date": "n.d.",
+   "citation": "fortunebusinessinsights.com(n.d.). CXL Memory Pooling Appliance Market Size, Share [2026- .... fortunebusinessinsights.com, https://www.fortunebusinessinsights.com/cxl-memory-pooling-appliance-market-117960"
+  },
+  {
+   "id": "WM4",
+   "kind": "web",
+   "tech": "sw",
+   "title": "vLLM, SGLang, TRT-LLM: LLM Engine Guide",
+   "url": "https://pub.towardsai.net/part-3-implementation-engine-level-choosing-the-runtime-that-gives-you-these-for-free-b0e9081205b0",
+   "site": "pub.towardsai.net",
+   "date": "n.d.",
+   "citation": "pub.towardsai.net(n.d.). vLLM, SGLang, TRT-LLM: LLM Engine Guide. pub.towardsai.net, https://pub.towardsai.net/part-3-implementation-engine-level-choosing-the-runtime-that-gives-you-these-for-free-b0e9081205b0"
+  },
+  {
+   "id": "WM5",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Enhancing DeepSeek models with MLA and FP8 ...",
+   "url": "https://www.redhat.com/en/blog/enhancing-deepseek-models-mla-and-fp8-optimizations-vllm",
+   "site": "redhat.com",
+   "date": "2025-03-05",
+   "citation": "redhat.com(2025-03-05). Enhancing DeepSeek models with MLA and FP8 .... redhat.com, https://www.redhat.com/en/blog/enhancing-deepseek-models-mla-and-fp8-optimizations-vllm"
+  },
+  {
+   "id": "WM6",
+   "kind": "web",
+   "tech": "sw",
+   "title": "DeepSeek-V3",
+   "url": "https://openlm.ai/deepseek-v3",
+   "site": "OpenLM.ai",
+   "date": "2024-12-26",
+   "citation": "OpenLM.ai(2024-12-26). DeepSeek-V3. OpenLM.ai, https://openlm.ai/deepseek-v3"
+  },
+  {
+   "id": "WM9",
+   "kind": "web",
+   "tech": "hw",
+   "title": "How CXL Memory Expansion Improves AI Economics",
+   "url": "https://www.asteralabs.com/resources/blog/inference-tokenomics-how-cxl-memory-expansion-improves-ai-economics",
+   "site": "ASTERA LABS, INC.",
+   "date": "2026-03-13",
+   "citation": "Amit Golander(2026-03-13). How CXL Memory Expansion Improves AI Economics. ASTERA LABS, INC., https://www.asteralabs.com/resources/blog/inference-tokenomics-how-cxl-memory-expansion-improves-ai-economics"
+  },
+  {
+   "id": "WM8",
+   "kind": "web",
+   "tech": "hw",
+   "title": "Dissecting CXL Memory Performance at Scale: Analysis, ...",
+   "url": "https://arxiv.org/html/2409.14317v1",
+   "site": "arxiv.org",
+   "date": "n.d.",
+   "citation": "arxiv.org(n.d.). Dissecting CXL Memory Performance at Scale: Analysis, .... arxiv.org, https://arxiv.org/html/2409.14317v1"
+  },
+  {
+   "id": "WM10",
+   "kind": "web",
+   "tech": "hw",
+   "title": "vLLM vs SGLang vs TensorRT-LLM - Inference Engineering",
+   "url": "https://inferenceengineering.tech/learn/vllm-vs-sglang-vs-tensorrt-llm",
+   "site": "inferenceengineering.tech",
+   "date": "2026",
+   "citation": "Philip Kiely(2026). vLLM vs SGLang vs TensorRT-LLM - Inference Engineering. inferenceengineering.tech, https://inferenceengineering.tech/learn/vllm-vs-sglang-vs-tensorrt-llm"
+  },
+  {
+   "id": "WM11",
+   "kind": "web",
+   "tech": "hw",
+   "title": "The Rebirth of Persistent Memory: How CXL lays ...",
+   "url": "https://www.snia.org/blog/2026/rebirth-persistent-memory-how-cxl-lays-foundation-current-and-next-generation-persistent",
+   "site": "snia.org",
+   "date": "n.d.",
+   "citation": "snia.org(n.d.). The Rebirth of Persistent Memory: How CXL lays .... snia.org, https://www.snia.org/blog/2026/rebirth-persistent-memory-how-cxl-lays-foundation-current-and-next-generation-persistent"
+  },
+  {
+   "id": "WM12",
+   "kind": "web",
+   "tech": "hw",
+   "title": "vLLM vs TensorRT-LLM vs SGLang: Which Inference ...",
+   "url": "https://www.runpod.io/articles/comparison/vllm-vs-tensorrt-llm",
+   "site": "runpod.io",
+   "date": "2026-06-23",
+   "citation": "runpod.io(2026-06-23). vLLM vs TensorRT-LLM vs SGLang: Which Inference .... runpod.io, https://www.runpod.io/articles/comparison/vllm-vs-tensorrt-llm"
+  },
+  {
+   "id": "WM7",
+   "kind": "web",
+   "tech": "hw",
+   "title": "OFC 2026: Marvell Launches Next-generation CXL Switch, Enabling Memory Pooling to Break Through the AI \"Memory Wall\" - StorageNewsletter",
+   "url": "https://www.storagenewsletter.com/2026/03/26/ofc-2026-marvell-launches-next-generation-cxl-switch-enabling-memory-pooling-to-break-through-the-ai-memory-wall",
+   "site": "storagenewsletter.com",
+   "date": "2026-03-26",
+   "citation": "storagenewsletter.com(2026-03-26). OFC 2026: Marvell Launches Next-generation CXL Switch, Enabling Memory Pooling to Break Through the AI \"Memory Wall\" - StorageNewsletter. storagenewsletter.com, https://www.storagenewsletter.com/2026/03/26/ofc-2026-marvell-launches-next-generation-cxl-switch-enabling-memory-pooling-to-break-through-the-ai-memory-wall"
+  },
+  {
+   "id": "WM14",
+   "kind": "web",
+   "tech": "hw",
+   "title": "Penguin Solutions ($PENG): Solving the AI Inference Memory Wall",
+   "url": "https://snmart.substack.com/p/penguin-solutions-peng-solving-the",
+   "site": "snmart.substack.com",
+   "date": "2026-05-20",
+   "citation": "Nicolas(2026-05-20). Penguin Solutions ($PENG): Solving the AI Inference Memory Wall. snmart.substack.com, https://snmart.substack.com/p/penguin-solutions-peng-solving-the"
+  },
+  {
+   "id": "WM17",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Enabling DeepSeek's Multi-Head Latent Attention in Any ...",
+   "url": "https://aclanthology.org/2025.acl-long.1597",
+   "site": "ACL Anthology",
+   "date": "n.d.",
+   "citation": "ACL Anthology(n.d.). Enabling DeepSeek's Multi-Head Latent Attention in Any .... ACL Anthology, https://aclanthology.org/2025.acl-long.1597"
+  },
+  {
+   "id": "WM18",
+   "kind": "web",
+   "tech": "sw",
+   "title": "DeepSeek's Multi-Head Latent Attention - Lior Sinai",
+   "url": "https://liorsinai.github.io/machine-learning/2025/02/22/mla.html",
+   "site": "liorsinai.github.io",
+   "date": "2025-02-22",
+   "citation": "liorsinai.github.io(2025-02-22). DeepSeek's Multi-Head Latent Attention - Lior Sinai. liorsinai.github.io, https://liorsinai.github.io/machine-learning/2025/02/22/mla.html"
+  },
+  {
+   "id": "WM15",
+   "kind": "web",
+   "tech": "hw",
+   "title": "Astera Labs Leo CXL Boost Azure M-series with 2TB | ALAB Stock News",
+   "url": "https://www.stocktitan.net/news/ALAB/astera-labs-leo-cxl-smart-memory-controllers-on-microsoft-azure-m-dig12mr10z66.html",
+   "site": "stocktitan.net",
+   "date": "n.d.",
+   "citation": "stocktitan.net(n.d.). Astera Labs Leo CXL Boost Azure M-series with 2TB | ALAB Stock News. stocktitan.net, https://www.stocktitan.net/news/ALAB/astera-labs-leo-cxl-smart-memory-controllers-on-microsoft-azure-m-dig12mr10z66.html"
+  },
+  {
+   "id": "WM16",
+   "kind": "web",
+   "tech": "hw",
+   "title": "CXL 4.0 Infrastructure Planning Guide | Introl Blog",
+   "url": "https://introl.com/blog/cxl-4-0-infrastructure-planning-guide-memory-pooling-2025",
+   "site": "Introl",
+   "date": "2026-03-29",
+   "citation": "Introl(2026-03-29). CXL 4.0 Infrastructure Planning Guide | Introl Blog. Introl, https://introl.com/blog/cxl-4-0-infrastructure-planning-guide-memory-pooling-2025"
+  },
+  {
+   "id": "WM20",
+   "kind": "web",
+   "tech": "hw",
+   "title": "Exploring CXL-based KV Cache Storage for LLM Serving Yupeng Tang1∗",
+   "url": "https://mlforsystems.org/assets/papers/neurips2024/paper17.pdf",
+   "site": "mlforsystems.org",
+   "date": "n.d.",
+   "citation": "mlforsystems.org(n.d.). Exploring CXL-based KV Cache Storage for LLM Serving Yupeng Tang1∗. mlforsystems.org, https://mlforsystems.org/assets/papers/neurips2024/paper17.pdf"
+  },
+  {
+   "id": "WM19",
+   "kind": "web",
+   "tech": "sw",
+   "title": "DeepSeek-V3 Explained, Part 1: Understanding Multi ...",
+   "url": "https://pub.towardsai.net/deepseek-v3-explained-part-1-understanding-multi-head-latent-attention-bac648681926",
+   "site": "pub.towardsai.net",
+   "date": "n.d.",
+   "citation": "pub.towardsai.net(n.d.). DeepSeek-V3 Explained, Part 1: Understanding Multi .... pub.towardsai.net, https://pub.towardsai.net/deepseek-v3-explained-part-1-understanding-multi-head-latent-attention-bac648681926"
+  },
+  {
+   "id": "WM13",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Multi-Head Latent Attention (MLA) Explained: DeepSeek",
+   "url": "https://theindex26.com/multi-head-latent-attention-mla-deepseek-kv-cache",
+   "site": "INDEX 26 Intelligence",
+   "date": "2026-08-28",
+   "citation": "INDEX 26 Intelligence(2026-08-28). Multi-Head Latent Attention (MLA) Explained: DeepSeek. INDEX 26 Intelligence, https://theindex26.com/multi-head-latent-attention-mla-deepseek-kv-cache"
+  },
+  {
+   "id": "WM21",
+   "kind": "web",
+   "tech": "hw",
+   "title": "CXL Explained: Protocols, Device Types, Versions, and Memory · KAD",
+   "url": "https://www.kad8.com/hardware/cxl-explained-protocols-device-types-versions-and-memory",
+   "site": "KAD",
+   "date": "2026-09-22",
+   "citation": "KAD(2026-09-22). CXL Explained: Protocols, Device Types, Versions, and Memory · KAD. KAD, https://www.kad8.com/hardware/cxl-explained-protocols-device-types-versions-and-memory"
+  },
+  {
+   "id": "WM22",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Multi-Head Latent Attention (MLA) | LLMS3",
+   "url": "https://llms3.com/node/multi-head-latent-attention-mla",
+   "site": "LLMS3.com",
+   "date": "n.d.",
+   "citation": "LLMS3.com(n.d.). Multi-Head Latent Attention (MLA) | LLMS3. LLMS3.com, https://llms3.com/node/multi-head-latent-attention-mla"
+  },
+  {
+   "id": "WM23",
+   "kind": "web",
+   "tech": "hw",
+   "title": "On-Package Memory with Universal Chiplet Interconnect Express (UCIe): A Low Power, High Bandwidth, Low Latency and Low Cost Approach",
+   "url": "https://www.alphaxiv.org/abs/2510.06513",
+   "site": "alphaXiv",
+   "date": "2025-10-07",
+   "citation": "Debendra Das Sharma(2025-10-07). On-Package Memory with Universal Chiplet Interconnect Express (UCIe): A Low Power, High Bandwidth, Low Latency and Low Cost Approach. alphaXiv, https://www.alphaxiv.org/abs/2510.06513"
+  },
+  {
+   "id": "WM24",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Multi-head Latent Attention (MLA) | deepseek-ai/DeepSeek-V3 | DeepWiki",
+   "url": "https://deepwiki.com/deepseek-ai/DeepSeek-V3/4.2-multi-head-latent-attention-(mla)",
+   "site": "DeepWiki",
+   "date": "2026-01-24",
+   "citation": "DeepWiki(2026-01-24). Multi-head Latent Attention (MLA) | deepseek-ai/DeepSeek-V3 | DeepWiki. DeepWiki, https://deepwiki.com/deepseek-ai/DeepSeek-V3/4.2-multi-head-latent-attention-(mla)"
+  },
+  {
+   "id": "WM25",
+   "kind": "web",
+   "tech": "sw",
+   "title": "DeepSeek R1 vs V3 for Business AI (2026 Guide)",
+   "url": "https://www.activepieces.com/blog/deepseek-r1-vs-v3-for-business-ai-2026-guide",
+   "site": "Activepieces",
+   "date": "2026-09-20",
+   "citation": "Activepieces(2026-09-20). DeepSeek R1 vs V3 for Business AI (2026 Guide). Activepieces, https://www.activepieces.com/blog/deepseek-r1-vs-v3-for-business-ai-2026-guide"
+  },
+  {
+   "id": "WM26",
+   "kind": "web",
+   "tech": "sw",
+   "title": "The Sequence #710: Learning About DeepSeek v3.1 in 10 Key Points",
+   "url": "https://thesequence.substack.com/p/the-sequence-710-learning-about-deepseek",
+   "site": "thesequence.substack.com",
+   "date": "2025-08-27",
+   "citation": "Jesus Rodriguez(2025-08-27). The Sequence #710: Learning About DeepSeek v3.1 in 10 Key Points. thesequence.substack.com, https://thesequence.substack.com/p/the-sequence-710-learning-about-deepseek"
+  },
+  {
+   "id": "WM27",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Chainwire - Products, Competitors, Financials, Employees, Headquarters Locations",
+   "url": "https://www.cbinsights.com/company/chainwire",
+   "site": "CB Insights",
+   "date": "n.d.",
+   "citation": "CB Insights(n.d.). Chainwire - Products, Competitors, Financials, Employees, Headquarters Locations. CB Insights, https://www.cbinsights.com/company/chainwire"
+  },
+  {
+   "id": "WM28",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Cross-Platform LLM Inference Engine Market",
+   "url": "https://dataintelo.com/report/cross-platform-llm-inference-engine-market",
+   "site": "dataintelo.com",
+   "date": "2025-06-28",
+   "citation": "Dataintelo(2025-06-28). Cross-Platform LLM Inference Engine Market. dataintelo.com, https://dataintelo.com/report/cross-platform-llm-inference-engine-market"
+  },
+  {
+   "id": "WM29",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Large Language Model(LLM) Market - Size, Share & ...",
+   "url": "https://www.industryresearch.biz/market-reports/large-language-model-llm-market-102241",
+   "site": "industryresearch.biz",
+   "date": "n.d.",
+   "citation": "industryresearch.biz(n.d.). Large Language Model(LLM) Market - Size, Share & .... industryresearch.biz, https://www.industryresearch.biz/market-reports/large-language-model-llm-market-102241"
+  },
+  {
+   "id": "WM30",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Enterprise LLM Market Size & Share, Growth Analysis 2034",
+   "url": "https://www.gminsights.com/industry-analysis/enterprise-llm-market",
+   "site": "Global Market Insights Inc.",
+   "date": "2025-09-01",
+   "citation": "Global Market Insights Inc.(2025-09-01). Enterprise LLM Market Size & Share, Growth Analysis 2034. Global Market Insights Inc., https://www.gminsights.com/industry-analysis/enterprise-llm-market"
+  },
+  {
+   "id": "WM31",
+   "kind": "web",
+   "tech": "sw",
+   "title": "Reliable LLM Inference at Scale",
+   "url": "https://www.databricks.com/blog/reliable-llm-inference-scale",
+   "site": "Databricks",
+   "date": "2026",
+   "citation": "Databricks(2026). Reliable LLM Inference at Scale. Databricks, https://www.databricks.com/blog/reliable-llm-inference-scale"
+  },
+  {
+   "id": "WM32",
+   "kind": "web",
+   "tech": "sw",
+   "title": "The Hidden Economics of LLM Inference",
+   "url": "https://www.hebbia.com/blog/the-hidden-economics-of-llm-inference",
+   "site": "Hebbia",
+   "date": "n.d.",
+   "citation": "Hebbia(n.d.). The Hidden Economics of LLM Inference. Hebbia, https://www.hebbia.com/blog/the-hidden-economics-of-llm-inference"
+  }
+ ]
+}

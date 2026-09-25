@@ -1,0 +1,362 @@
+[
+ {
+  "question": "How does DeepSeek-V2's performance on English and Chinese benchmarks compare to that of Mixtral 8x22B, especially considering their training data and parameter sizes?",
+  "tech": "sw",
+  "gold": 49,
+  "split": "selection"
+ },
+ {
+  "question": "How does DeepSeek-V2-Chat-RL perform compared to other large language models on coding benchmarks such as HumanEval and LiveCodeBench?",
+  "tech": "sw",
+  "gold": 113,
+  "split": "test"
+ },
+ {
+  "question": "How does the ITME system enable user-space applications to efficiently prefetch data from SSD to DRAM with minimal software overhead?",
+  "tech": "hw",
+  "gold": 179,
+  "split": "selection"
+ },
+ {
+  "question": "What learning rate schedule and batch size approach are used during the pre-training of DeepSeek-V2 MLA?",
+  "tech": "sw",
+  "gold": 101,
+  "split": "test"
+ },
+ {
+  "question": "How does ITME address the challenge of limited host memory when running large language model workloads?",
+  "tech": "hw",
+  "gold": 224,
+  "split": "selection"
+ },
+ {
+  "question": "Which recent techniques or methods have been referenced in the development or evaluation of DeepSeek-V2 MLA?",
+  "tech": "sw",
+  "gold": 88,
+  "split": "test"
+ },
+ {
+  "question": "Which benchmarks or evaluation methods have been used to assess the performance of DeepSeek-V2 MLA?",
+  "tech": "sw",
+  "gold": 94,
+  "split": "selection"
+ },
+ {
+  "question": "What collaborative approach does ITME use to enable memory disaggregation and computation in CXL-Hybrid environments?",
+  "tech": "hw",
+  "gold": 230,
+  "split": "test"
+ },
+ {
+  "question": "How does the ITME system handle the management and reuse of model weights to minimize redundant data transfers during inference sessions?",
+  "tech": "hw",
+  "gold": 194,
+  "split": "selection"
+ },
+ {
+  "question": "Who were the main contributors involved in the research and engineering of DeepSeek-V2 MLA?",
+  "tech": "sw",
+  "gold": 95,
+  "split": "test"
+ },
+ {
+  "question": "What techniques does DeepSeek-V2 MLA use to improve inference efficiency compared to standard multi-head attention?",
+  "tech": "sw",
+  "gold": 3,
+  "split": "selection"
+ },
+ {
+  "question": "How does ITME provide memory expansion without relying on costly DPUs?",
+  "tech": "hw",
+  "gold": 159,
+  "split": "test"
+ },
+ {
+  "question": "How does DeepSeek-V2 reduce the computational expense typically associated with reinforcement learning during its alignment process?",
+  "tech": "sw",
+  "gold": 55,
+  "split": "selection"
+ },
+ {
+  "question": "How does DeepSeek-V2 address the inference efficiency bottleneck caused by the large Key-Value cache in conventional Transformer models?",
+  "tech": "sw",
+  "gold": 16,
+  "split": "test"
+ },
+ {
+  "question": "What steps is the team taking to ensure their model remains cost-effective as they scale up its size and capabilities?",
+  "tech": "sw",
+  "gold": 74,
+  "split": "selection"
+ },
+ {
+  "question": "How does DeepSeek-V2 MLA perform when tasked with writing Python functions that meet specific test cases?",
+  "tech": "sw",
+  "gold": 131,
+  "split": "test"
+ },
+ {
+  "question": "What techniques are used to align DeepSeek-V2 MLA during training?",
+  "tech": "sw",
+  "gold": 5,
+  "split": "selection"
+ },
+ {
+  "question": "How does DeepSeekMoE improve upon traditional Mixture-of-Experts architectures in terms of expert specialization and knowledge redundancy?",
+  "tech": "sw",
+  "gold": 25,
+  "split": "test"
+ },
+ {
+  "question": "How does ITME minimize interference between eviction maintenance and critical prefetching operations to maintain high read bandwidth from storage?",
+  "tech": "hw",
+  "gold": 189,
+  "split": "selection"
+ },
+ {
+  "question": "How does DeepSeek-V2's performance compare to other leading open-source models when evaluated under identical conditions across various benchmarks?",
+  "tech": "sw",
+  "gold": 48,
+  "split": "test"
+ },
+ {
+  "question": "What is an example of a programming task used to evaluate the model's ability to solve Python coding problems?",
+  "tech": "sw",
+  "gold": 132,
+  "split": "selection"
+ },
+ {
+  "question": "What are the main challenges associated with increasing high-speed memory capacity for inference systems, and why is simply adding more GPUs or host memory not always a practical solution?",
+  "tech": "hw",
+  "gold": 147,
+  "split": "test"
+ },
+ {
+  "question": "How does the CXL-hybrid memory device enable large-scale, cost-efficient memory expansion for a host CPU?",
+  "tech": "hw",
+  "gold": 166,
+  "split": "selection"
+ },
+ {
+  "question": "How does Multi-head Latent Attention (MLA) impact the amount of key-value cache required during inference compared to other attention mechanisms?",
+  "tech": "sw",
+  "gold": 18,
+  "split": "test"
+ },
+ {
+  "question": "What strategies were implemented to improve GPU utilization and manage memory during DeepSeek-V2 MLA's RL training on large models?",
+  "tech": "sw",
+  "gold": 59,
+  "split": "selection"
+ },
+ {
+  "question": "Why does using smaller data chunks in CXL-hybrid memory lead to reduced bandwidth efficiency?",
+  "tech": "hw",
+  "gold": 192,
+  "split": "test"
+ },
+ {
+  "question": "How does DeepSeek-V2 compare to DeepSeek 67B in terms of training cost and inference efficiency?",
+  "tech": "sw",
+  "gold": 2,
+  "split": "selection"
+ },
+ {
+  "question": "Does DeepSeek-V2 currently handle data types beyond text, or is it limited to a single modality?",
+  "tech": "sw",
+  "gold": 75,
+  "split": "test"
+ },
+ {
+  "question": "How many parameters are active per token in DeepSeek-V2, and what techniques are used to maintain stable training given the model's architecture?",
+  "tech": "sw",
+  "gold": 36,
+  "split": "selection"
+ },
+ {
+  "question": "How does the system ensure that necessary data is available in the CXL-DRAM cache during LLM inference, and what strategies are used for managing different types of data?",
+  "tech": "hw",
+  "gold": 196,
+  "split": "test"
+ },
+ {
+  "question": "How does DeepSeek-V2 MLA ensure the reliability of its reward models during the reinforcement learning process?",
+  "tech": "sw",
+  "gold": 57,
+  "split": "selection"
+ },
+ {
+  "question": "How does DeepSeek-V2 Chat (SFT) compare to other leading open-source language models in terms of performance across different benchmarks and task domains?",
+  "tech": "sw",
+  "gold": 61,
+  "split": "test"
+ },
+ {
+  "question": "How does the system manage data movement between the GPU and storage to maintain high GPU utilization, and what mechanisms are used to optimize bandwidth and buffer capacity?",
+  "tech": "hw",
+  "gold": 182,
+  "split": "selection"
+ },
+ {
+  "question": "How does ITME allow GPU servers to efficiently access large model weights and KV caches for large language model inference?",
+  "tech": "hw",
+  "gold": 154,
+  "split": "test"
+ },
+ {
+  "question": "Which research paper provides details on the scaling approach and long-term strategy behind the DeepSeek-V2 language model?",
+  "tech": "sw",
+  "gold": 80,
+  "split": "selection"
+ },
+ {
+  "question": "How does DeepSeek-V2 MLA perform on tasks that require resolving pronoun references in Chinese text?",
+  "tech": "sw",
+  "gold": 123,
+  "split": "test"
+ },
+ {
+  "question": "How does the number of activated parameters in DeepSeek-V2-Lite compare to its total parameter count, and what does this imply about its efficiency during inference?",
+  "tech": "sw",
+  "gold": 102,
+  "split": "selection"
+ },
+ {
+  "question": "What approach does ITME use to manage memory efficiently for large language model inference when using CXL-based tiered memory systems?",
+  "tech": "hw",
+  "gold": 231,
+  "split": "test"
+ },
+ {
+  "question": "How does ITME improve throughput when handling large key-value cache sizes that exceed the host memory capacity?",
+  "tech": "hw",
+  "gold": 146,
+  "split": "selection"
+ },
+ {
+  "question": "Which datasets or benchmarks are referenced in the evaluation of DeepSeek-V2 MLA's performance, particularly regarding code understanding and question answering?",
+  "tech": "sw",
+  "gold": 78,
+  "split": "test"
+ },
+ {
+  "question": "Which large-scale datasets are commonly used to assess the reading comprehension abilities of advanced language models like DeepSeek-V2 MLA?",
+  "tech": "sw",
+  "gold": 84,
+  "split": "selection"
+ },
+ {
+  "question": "Why does the system manage storage and RDMA operations at a coarse-grained chunk level rather than using smaller data units?",
+  "tech": "hw",
+  "gold": 191,
+  "split": "test"
+ },
+ {
+  "question": "How does the training data for DeepSeek-V2 differ from that used in the previous DeepSeek 67B model?",
+  "tech": "sw",
+  "gold": 10,
+  "split": "selection"
+ },
+ {
+  "question": "How does the MLA component in DeepSeek-V2 improve inference efficiency compared to standard attention mechanisms?",
+  "tech": "sw",
+  "gold": 15,
+  "split": "test"
+ },
+ {
+  "question": "How does DeepSeek-V2's performance in code and math tasks compare to LLaMA3 70B, given that it was trained on significantly fewer English tokens?",
+  "tech": "sw",
+  "gold": 50,
+  "split": "selection"
+ },
+ {
+  "question": "How does ITME's performance compare to a CPU-offload approach when the active data set fits within local memory, and what changes as the data set grows beyond local capacity?",
+  "tech": "hw",
+  "gold": 209,
+  "split": "test"
+ },
+ {
+  "question": "How does DeepSeek-V2 Chat (RL) compare to other leading large language models in terms of Chinese language understanding and reasoning abilities?",
+  "tech": "sw",
+  "gold": 66,
+  "split": "selection"
+ },
+ {
+  "question": "How does the system ensure efficient data transfer between host and GPU memory during model execution?",
+  "tech": "hw",
+  "gold": 204,
+  "split": "test"
+ },
+ {
+  "question": "What percentage of the population was outside the 25 to 44 age group?",
+  "tech": "sw",
+  "gold": 121,
+  "split": "selection"
+ },
+ {
+  "question": "Which evaluation benchmarks are used to assess the performance of DeepSeek-V2 MLA on Chinese and English language understanding tasks?",
+  "tech": "sw",
+  "gold": 92,
+  "split": "test"
+ },
+ {
+  "question": "What is a drawback of using DPU-based solutions for shared context memory in cluster environments?",
+  "tech": "hw",
+  "gold": 158,
+  "split": "selection"
+ },
+ {
+  "question": "What dataset was used to evaluate DeepSeek-V2 MLA's performance on Chinese idiom cloze tests?",
+  "tech": "sw",
+  "gold": 93,
+  "split": "test"
+ },
+ {
+  "question": "What trade-off does the KVCache-centric architecture described in Mooncake make to improve performance?",
+  "tech": "hw",
+  "gold": 233,
+  "split": "selection"
+ },
+ {
+  "question": "How does the memory usage for KV cache in MLA compare to MHA in both small and large MoE models?",
+  "tech": "sw",
+  "gold": 106,
+  "split": "test"
+ },
+ {
+  "question": "How does the MLA approach in DeepSeek-V2 reduce the memory requirements for key-value caching during inference compared to standard multi-head attention?",
+  "tech": "sw",
+  "gold": 19,
+  "split": "selection"
+ },
+ {
+  "question": "How does the performance of ITME compare to traditional CPU-offload methods when both use weight offloading and prefetching for large language models?",
+  "tech": "hw",
+  "gold": 206,
+  "split": "test"
+ },
+ {
+  "question": "How does ITME perform in terms of time to first token speedup compared to using only GPU memory when handling large KV cache footprints during multi-turn conversations?",
+  "tech": "hw",
+  "gold": 205,
+  "split": "selection"
+ },
+ {
+  "question": "How does DeepSeek-V2 achieve more efficient inference compared to previous models?",
+  "tech": "sw",
+  "gold": 0,
+  "split": "test"
+ },
+ {
+  "question": "What types of question-answering tasks can this model handle, based on the provided examples?",
+  "tech": "sw",
+  "gold": 134,
+  "split": "selection"
+ },
+ {
+  "question": "How does DeepSeek-V2's efficiency and performance compare to other open-source language models when considering the number of active parameters and resource usage?",
+  "tech": "sw",
+  "gold": 11,
+  "split": "test"
+ }
+]

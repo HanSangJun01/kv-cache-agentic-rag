@@ -1,0 +1,28 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	tech_research(tech_research)
+	market_eval(market_eval)
+	domain_eval(domain_eval)
+	synthesis(synthesis)
+	report_writer(report_writer)
+	report_reviewer(report_reviewer)
+	save_outputs(save_outputs)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> tech_research;
+	domain_eval --> synthesis;
+	market_eval --> synthesis;
+	report_reviewer -. &nbsp;revise&nbsp; .-> report_writer;
+	report_reviewer -. &nbsp;approve&nbsp; .-> save_outputs;
+	report_writer --> report_reviewer;
+	synthesis --> report_writer;
+	tech_research --> domain_eval;
+	tech_research --> market_eval;
+	save_outputs --> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
