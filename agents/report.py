@@ -125,7 +125,7 @@ class JudgeReview(BaseModel):
 
 
 CSS = """@page { size: A4; margin: 16mm 15mm; @bottom-center { content: counter(page) " / " counter(pages); font-size: 8pt; color: #666; } }
-body { font-family: "Apple SD Gothic Neo", "NanumGothic", "Noto Sans CJK KR", sans-serif; font-size: 9.5pt; line-height: 1.5; color: #111; }
+body { font-family: "Apple SD Gothic Neo", "Malgun Gothic", "NanumGothic", "Noto Sans CJK KR", sans-serif; font-size: 9.5pt; line-height: 1.5; color: #111; }
 h1 { font-size: 16pt; margin: 0 0 4pt; } h2 { font-size: 12.5pt; border-bottom: 1px solid #999; margin: 12pt 0 4pt; padding-bottom: 2pt; }
 h3 { font-size: 10.5pt; margin: 8pt 0 3pt; } p, li { margin: 2pt 0; } ul { padding-left: 14pt; margin: 2pt 0; }
 table { border-collapse: collapse; width: 100%; font-size: 8.3pt; margin: 4pt 0; } th, td { border: 1px solid #aaa; padding: 2pt 4pt; vertical-align: top; }

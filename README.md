@@ -201,5 +201,10 @@ python tests/test_offline.py             # (선택) 결정론 검사
 ```
 첫 실행 시 bge-m3 를 내려받고 인덱스를 `.cache/` 에 저장한다(이후 재임베딩 없음).
 
+OS별 준비 (PDF 렌더러 WeasyPrint·한글 폰트)
+- macOS: `brew install pango` (한글 폰트 기본 내장)
+- Ubuntu/Debian: `sudo apt install libpango-1.0-0 libpangoft2-1.0-0 fonts-noto-cjk`
+- Windows: [GTK3 runtime](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases) 설치, 가상환경 활성화는 `.venv\Scripts\activate`, `.env` 복사는 `copy .env.example .env`
+
 ## Contributors
 - 한상준 : 과제 설계, Agent 설계·구현(LangGraph), RAG 파이프라인·임베딩 평가, 프롬프트 엔지니어링, 보고서 검증 로직
