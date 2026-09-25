@@ -41,7 +41,10 @@ TOP_K = 5
 MAX_QUERY_REWRITE = 1
 RRF_K = 60
 
-PAPER_TAG = re.compile(r"\[(P-SW|P-HW) p\.(\d+)\]")
+# 출처 태그 문법 — 형식만 정의하고, 어떤 ID 가 유효한지는 config(source_id)·출처 레지스트리가 정한다
+PAPER_TAG = re.compile(r"\[([A-Z][\w-]*) p\.(\d+)\]")  # 논문 페이지 인용 [P-SW p.3]
+WEB_TAG = re.compile(r"\[([A-Z]+\d+)\]")                # 웹 인용 [WM2] (노드별 prefix + 번호)
+SOURCE_TAG = re.compile(f"{PAPER_TAG.pattern}|{WEB_TAG.pattern}")  # 그룹: 1=논문 ID, 2=쪽, 3=웹 ID
 
 
 @cache

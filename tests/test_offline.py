@@ -56,6 +56,18 @@ def test_rule_check_and_route():
     assert route_review({"review": {"passed": False}, "revision_count": 2}, max_revision=2) == "unverified"
 
 
+def test_source_ids_not_hardcoded():
+    """출처 ID 는 config·레지스트리 값을 따른다 — P-SW/WM 이 아닌 ID 로도 인용 변환·검사가 동작해야 함."""
+    src = [{"id": "P-A", "kind": "paper", "ref_type": "논문", "citation": "A(2024). Paper A. *arXiv*, 1."},
+           {"id": "WX1", "kind": "web", "ref_type": "기타", "citation": "X(n.d.). *Web X*. x, https://x"}]
+    body = "\n".join(f"## {h}\n내용" for h in ["SUMMARY", "1. 분석 배경", "2. 기술 선정", "3. 기술 개요", "4. 관점별 평가", "5. 시사점", "6. 한계점"])
+    md = finalize_citations(body + "\n수치 5.76배[P-A p.1]. 웹[WX1]. 가짜[WX9]. 기준(M1)과 [M1] 표기.", src)
+    assert "5.76배[1, p.1]" in md and "웹[2]" in md and {n: s["id"] for n, s in ref_map(md, src).items()} == {1: "P-A", 2: "WX1"}
+    assert "[P-A p.1]" in restore_tags(md, src)
+    critical, _ = rule_check(md, src, lambda sid, p: PAGES.get(("P-SW", p)) if sid == "P-A" else None)
+    assert critical == ["[규칙] 등록되지 않았거나 형식이 틀린 출처 태그: [WX9]"], critical  # [M1] 은 태그로 오인하지 않음
+
+
 def test_reference_formats():
     """REFERENCE 표기 지침: 특허 / 논문 / 웹."""
     patent = parse_meta('<meta name="DC.title" content="KV Cache Transform Coding"><meta name="DC.date" content="2023-04-30" scheme="dateSubmitted">'

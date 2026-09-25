@@ -11,11 +11,9 @@ from pydantic import BaseModel
 
 from prompts.criteria import BIAS_STRATEGIES, CRITERIA, FORBIDDEN_PHRASES, MAX_PAGES, REQUIRED_SECTIONS, SUMMARY_MAX_CHARS
 from prompts.templates import REPORT_PROMPT, REVIEW_PROMPT, REVISE_PROMPT, SYNTHESIS_PROMPT
-from rag.pipeline import ROOT, generator, judge, knowledge_base, unsupported_numbers
+from rag.pipeline import ROOT, SOURCE_TAG, generator, judge, knowledge_base, unsupported_numbers
 
-TAG_RE = re.compile(r"\[(P-SW|P-HW) p\.(\d+)\]|\[(W[MD]\d+)\]")
 NUM_CITE = re.compile(r"\[(\d+), p\.(\d+)\]")
-LEFTOVER_TAG = re.compile(r"\[(?:P-SW|P-HW|W[MD]\d)[^\]]*\]")
 
 
 # ---------------------------------------------------------------- ⚖️ 평가 종합 에이전트
@@ -55,7 +53,7 @@ def finalize_citations(draft: str, sources: list[dict]) -> str:
     미등록 태그는 그대로 남겨 검토에서 잡는다."""
     by_id = {s["id"]: s for s in sources}
     body = re.split(r"\n#+\s*REFERENCE", draft)[0].rstrip()
-    cited = list(dict.fromkeys(m[1] or m[3] for m in TAG_RE.finditer(body) if (m[1] or m[3]) in by_id))
+    cited = list(dict.fromkeys(m[1] or m[3] for m in SOURCE_TAG.finditer(body) if (m[1] or m[3]) in by_id))
     group = lambda sid: by_id[sid].get("ref_type", "기타")
     ordered = [sid for g in REF_GROUPS for sid in cited if group(sid) == g]
     number = {sid: n for n, sid in enumerate(ordered, 1)}
@@ -66,7 +64,7 @@ def finalize_citations(draft: str, sources: list[dict]) -> str:
             return m[0]
         return f"[{number[sid]}, p.{m[2]}]" if m[1] else f"[{number[sid]}]"
 
-    body = TAG_RE.sub(sub, body)
+    body = SOURCE_TAG.sub(sub, body)
     refs = "\n\n".join(f"### {g}\n\n" + "\n\n".join(f"[{number[sid]}] {by_id[sid]['citation']}" for sid in ordered if group(sid) == g)
                        for g in REF_GROUPS if any(group(sid) == g for sid in ordered))
     return f"{body}\n\n## REFERENCE\n\n{refs}\n"
@@ -156,6 +154,14 @@ def plain_len(text: str) -> int:
     return len(re.sub(r"[#*|`>\-]|\[\d+(?:, p\.\d+)?\]", "", text).strip())
 
 
+def leftover_tags(body: str, sources: list[dict]) -> list[str]:
+    """번호로 바뀌지 않고 남은 출처 태그. 레지스트리 ID 의 접두어(P-SW, WM …)로 시작하는 괄호만 본다 → [M1] 같은 일반 괄호는 제외."""
+    prefixes = sorted({re.sub(r"\d+$", "", s["id"]) for s in sources}, key=len, reverse=True)
+    if not prefixes:
+        return []
+    return sorted(set(re.findall(r"\[(?:%s)[^\]]*\]" % "|".join(map(re.escape, prefixes)), body)))
+
+
 def rule_check(md: str, sources: list[dict], page_text) -> tuple[list[str], int]:
     critical = []
     heads = re.findall(r"^##\s+(.+)$", md, re.M)
@@ -166,7 +172,7 @@ def rule_check(md: str, sources: list[dict], page_text) -> tuple[list[str], int]
         critical.append(f"[규칙] SUMMARY {n}자 > {SUMMARY_MAX_CHARS}자(반 페이지) — 줄일 것")
     body = md.split("## REFERENCE", 1)[0]
     critical += [f"[규칙] 우열·추천 금칙어 사용: \"{p}\"" for p in FORBIDDEN_PHRASES if p in body]
-    critical += [f"[규칙] 등록되지 않았거나 형식이 틀린 출처 태그: {t}" for t in sorted(set(LEFTOVER_TAG.findall(body)))]
+    critical += [f"[규칙] 등록되지 않았거나 형식이 틀린 출처 태그: {t}" for t in leftover_tags(body, sources)]
     refs = ref_map(md, sources)
     page_of = lambda m: page_text(refs[int(m[1])]["id"], int(m[2])) if int(m[1]) in refs and refs[int(m[1])]["kind"] == "paper" else None
     critical += [f"[규칙] {i}" for i in unsupported_numbers(body, NUM_CITE, page_of)]

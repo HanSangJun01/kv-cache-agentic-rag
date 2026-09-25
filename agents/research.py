@@ -11,9 +11,8 @@ from pydantic import BaseModel, Field
 
 from prompts.criteria import CRITERIA, PROFILE_QUESTIONS, criteria_table
 from prompts.templates import COMMON_RULES, EVAL_PROMPT, FIX_PROMPT, PROFILE_PROMPT, REFLECT_PROMPT
-from rag.pipeline import PAPER_TAG, agentic_retrieve, generator, judge, knowledge_base, unsupported_numbers, web_search, web_source
+from rag.pipeline import PAPER_TAG, SOURCE_TAG, agentic_retrieve, generator, judge, knowledge_base, unsupported_numbers, web_search, web_source
 
-ANY_TAG = re.compile(r"\[(?:P-SW|P-HW) p\.\d+\]|\[W[MD]\d+\]")
 
 
 # ---------------------------------------------------------------- 구조화 출력 스키마
@@ -67,10 +66,11 @@ def reflect(kb, schema, obj: BaseModel, evidence: list[dict], name: str, tech: s
     """Reflection: 결과를 인용 페이지 원문과 재대조. 결정론(태그·수치) + Judge LLM → 문제 있으면 1회 수정."""
     text = dump(obj)
     allowed = {e["tag"] for e in evidence}
-    issues = [f"근거 목록에 없는 출처 태그 {t}" for t in sorted(set(ANY_TAG.findall(text)) - allowed)]
+    tags = {m.group(0) for m in SOURCE_TAG.finditer(text)}
+    issues = [f"근거 목록에 없는 출처 태그 {t}" for t in sorted(tags - allowed)]
     issues += unsupported_numbers(text, PAPER_TAG, lambda m: kb.page_text(m[1], int(m[2])))
-    cited = sorted(set(ANY_TAG.findall(text)) & allowed)
-    web = {e["tag"]: e["text"] for e in evidence if e["tag"].startswith("[W")}
+    cited = sorted(tags & allowed)
+    web = {e["tag"]: e["text"] for e in evidence if not PAPER_TAG.fullmatch(e["tag"])}
     sources = "\n\n".join(f"{t}\n{web[t] if t in web else kb.page_text(*_page(t))}" for t in cited)
     issues += judge().with_structured_output(Reflection).invoke(REFLECT_PROMPT.format(name=name, rubric=rubric and f"평가 루브릭:\n{rubric}\n", sources=sources, output=text)).issues
     if issues:
