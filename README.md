@@ -106,141 +106,79 @@
 - 시장성·도메인 평가는 같은 절차 함수(`evaluate_perspective`)를 공유하지만 기준·근거원·판단 책임이 다른 독립 에이전트
 
 ## Architecture
+**읽는 법** — 굵은 테두리 상자 = LangGraph **node** (`add_node`) · 실선 = **edge** (`add_edge`) · 점선 = **conditional edge** (`add_conditional_edges` + 분기 함수 `route_review`) · 상자 안 점선 테두리 단계 = 노드 함수 **내부 처리** (그래프 노드 아님) · `(G)` Generator LLM, `(J)` Judge LLM
+
 ```mermaid
-graph TD
-    S([START - 기술 2건·도메인은 config 입력]) --> B[🔍 tech_research<br/>Agentic RAG + Reflection]
-    B --> C[📊 market_eval<br/>RAG + 웹 검색]
-    B --> E[🏭 domain_eval<br/>RAG + 웹 보강]
-    C --> F[⚖️ synthesis]
-    E --> F
-    F --> G[📝 report_writer<br/>인용 태그 → REFERENCE 자동화]
-    G --> R{✅ report_reviewer<br/>규칙 검사 + LLM Judge}
-    R -- revise: critical 있음 & 재작성 < 2 --> G
-    R -- approve --> X[💾 save_outputs<br/>MD/PDF + review.md]
-    R -- unverified: 재작성 한도 도달 --> X
-    X --> END([END])
+flowchart TD
+    S(["START<br/>기술 2건 · 도메인 = config 입력 (Human 선정)"])
+
+    subgraph TR["🔍 tech_research"]
+        direction TB
+        B1["질문 6개 · SW ∥ HW 병렬"] --> B2["Agentic RAG<br/>Hybrid 검색 → 관련성 판정 (J) → 질의 재작성 (G)"]
+        B2 --> B3["TechProfile 생성 (G)"] --> B4["Reflection<br/>인용 원문 재대조 · 수치 정규식 대조"]
+    end
+
+    subgraph ME["📊 market_eval · 시장성 M1~M3"]
+        direction TB
+        C1["웹 질의 쌍 (채택·한계)<br/>+ 논문 RAG"] --> C2["평가 생성 (G)<br/>등급 · 반대 근거 필수"] --> C3["Reflection + 루브릭"]
+    end
+
+    subgraph DE["🏭 domain_eval · 도메인 D1~D4"]
+        direction TB
+        E1["논문 RAG<br/>+ 웹 보강 · fallback"] --> E2["평가 생성 (G)<br/>등급 · 반대 근거 필수"] --> E3["Reflection + 루브릭"]
+    end
+
+    subgraph SY["⚖️ synthesis"]
+        F1["종합 생성 (G)<br/>일치 · 상충 · 기술 간 인식 차이 · 보완 가능성"]
+    end
+
+    subgraph RW["📝 report_writer"]
+        direction TB
+        G1["보고서 초안 (G)<br/>문장마다 출처 태그"] --> G2["태그 → 번호<br/>인용된 출처만 REFERENCE"]
+    end
+
+    subgraph RR["✅ report_reviewer"]
+        direction TB
+        R1["규칙 검사<br/>목차 · SUMMARY · 10쪽 · 금칙어 · 수치 대조"] --> R3["review<br/>passed · critical · minor"]
+        R2["LLM-as-a-Judge (J)"] --> R3
+    end
+
+    subgraph SO["💾 save_outputs"]
+        X1["미통과면 상단 표시 → PDF 렌더링<br/>report.md · PDF · review.md · trace.json"]
+    end
+
+    RT{"route_review<br/>(분기 함수)"}
+
+    S --> TR
+    TR -- "fan-out" --> ME
+    TR -- "fan-out" --> DE
+    ME -- "fan-in" --> SY
+    DE -- "fan-in" --> SY
+    SY --> RW
+    RW --> RR
+    R3 -.-> RT
+    RT -. "approve<br/>critical 없음" .-> SO
+    RT -. "unverified<br/>재작성 한도 도달" .-> SO
+    SO --> END(["END"])
+    RT -. "revise (Loop)<br/>critical 있음 · 재작성 2회 미만" .-> RW
+
+    classDef step fill:#ffffff,stroke:#9e9e9e,stroke-dasharray:4 3,color:#333333
+    classDef router fill:#fff4e5,stroke:#f57c00,stroke-width:2px,color:#333333
+    class B1,B2,B3,B4,C1,C2,C3,E1,E2,E3,F1,G1,G2,R1,R2,R3,X1 step
+    class RT router
+    style TR fill:#e8f0fe,stroke:#1a73e8,stroke-width:3px
+    style ME fill:#e8f0fe,stroke:#1a73e8,stroke-width:3px
+    style DE fill:#e8f0fe,stroke:#1a73e8,stroke-width:3px
+    style SY fill:#e8f0fe,stroke:#1a73e8,stroke-width:3px
+    style RW fill:#e8f0fe,stroke:#1a73e8,stroke-width:3px
+    style RR fill:#e8f0fe,stroke:#1a73e8,stroke-width:3px
+    style SO fill:#e8f0fe,stroke:#1a73e8,stroke-width:3px
 ```
 - Workflow: 정보 수집(기술 조사) → 평가(시장 ∥ 도메인, **fan-out**) → 종합(**fan-in**) → 보고서
 - Loop: `report_writer ⇄ report_reviewer`, `MAX_REPORT_REVISION = 2`
 - Branch: `route_review` 의 `revise / approve / unverified` 3갈래 조건부 엣지
 - 종료 보장: 그래프 `recursion_limit = 25`, Agentic RAG `MAX_QUERY_REWRITE = 1`
 - 코드와의 일치 증빙: 실행 시 `app.get_graph().draw_mermaid()` 결과를 `outputs/graph.mmd` 로 저장
-
-### Agent 내부 구조
-그래프 노드 하나하나의 내부 처리 흐름. `(G)` = Generator LLM, `(J)` = Judge LLM, 표시 없는 단계는 LLM 없이 도는 결정론 코드.
-
-**공통 부품 ① Agentic RAG 검색 루프** (`rag/pipeline.py: agentic_retrieve`) — 🔍·📊·🏭 세 Agent 가 질문마다 호출
-```mermaid
-flowchart LR
-    Q["질문 (tech 지정)"] --> S["Hybrid 검색<br/>Dense(bge-m3) + BM25 → RRF 상위 5개<br/>tech 필터로 해당 논문만"]
-    S --> G{"관련성 판정 (J)<br/>청크별 채택 여부"}
-    G -- "관련 1개 이상" --> P["앞 청크 문맥 보강<br/>(Parent Document)"]
-    P --> E["근거 + 페이지 태그<br/>예: P-SW p.8"]
-    G -- "관련 0 · 재작성 전" --> W["질의 재작성 (G)<br/>영문 키워드 중심"]
-    W --> S
-    G -- "관련 0 · 재작성 1회 후" --> N["관련 근거 없음 기록"]
-```
-
-**공통 부품 ② Reflection 근거 검증** (`agents/research.py: reflect`) — 세 RAG Agent 의 마지막 단계
-```mermaid
-flowchart LR
-    O["Agent 결과<br/>(구조화 출력)"] --> T["태그 검사<br/>근거 목록에 없는 출처 태그"]
-    O --> R["수치 대조<br/>인용 페이지 원문에 수치가 있는가 (정규식)"]
-    O --> J["원문 재대조 (J)<br/>수치·조건·대상 기술 일치<br/>평가 Agent 는 루브릭 일치도 검사"]
-    T --> I{"지적 사항 있음?"}
-    R --> I
-    J --> I
-    I -- "있음" --> F["지적 반영 1회 수정 (G)"]
-    I -- "없음" --> OUT["최종 결과"]
-    F --> OUT
-```
-
-**🔍 기술 조사 `tech_research`**
-```mermaid
-flowchart TD
-    IN["technologies"] --> PT["기술별 병렬 처리 (SW ∥ HW)"]
-    PT --> QS["기술 조사 질문 6개<br/>개요 · 핵심 방식 · 저자 보고 성과 · 실험 조건 · 한계 · 도입 조건"]
-    QS --> AR["공통 부품 ① Agentic RAG<br/>(질문 4개씩 병렬, 논문 원문만 근거)"]
-    AR --> DD["근거 중복 제거"]
-    DD --> GEN["TechProfile 생성 (G)"]
-    GEN --> RF["공통 부품 ② Reflection"]
-    RF --> OUT["tech_profiles<br/>sources: 선정 논문 P-SW · P-HW<br/>trace"]
-```
-
-**📊 시장성 평가 `market_eval` · 🏭 도메인 평가 `domain_eval`** — 같은 절차(`evaluate_perspective`), 다른 기준·근거·판단 책임
-```mermaid
-flowchart TD
-    IN["technologies · tech_profiles · domain"] --> PT["기술별 병렬 처리 (SW ∥ HW)"]
-    PT --> CR["기준별 병렬 처리<br/>시장성 M1~M3 / 도메인 D1~D4"]
-    CR --> AR["논문 질의 → 공통 부품 ① Agentic RAG<br/>M2 · M3 · D1~D4"]
-    CR --> WS["웹 질의 쌍 → Tavily 검색<br/>채택·성과 / 한계·제약(사실)<br/>M1~M3 · D4"]
-    AR -- "논문 근거 0 · 웹 질의 없는 기준(D1~D3)" --> WS
-    WS --> SRC["출처 등록<br/>페이지 메타데이터 → 특허/논문/기타 서지<br/>노드별 번호 WM · WD, URL 중복 제거"]
-    AR --> EV["기준별 근거 모음"]
-    SRC --> EV
-    EV --> GEN["PerspectiveEvaluation 생성 (G)<br/>등급 · 신뢰도 · 지지 근거 · 반대 근거(필수) · 정보 공백"]
-    GEN --> RF["공통 부품 ② Reflection<br/>+ 루브릭 일치 검사"]
-    RF --> OUT["market_eval 또는 domain_eval<br/>sources · trace"]
-```
-
-| | 📊 시장성 평가 | 🏭 도메인 평가 |
-|---|---|---|
-| 기준 | M1 시장 규모·성장성, M2 상용화·채택, M3 생태계 지지 | D1 비용 효율, D2 처리량·지연, D3 품질 유지, D4 도입 용이성 |
-| 주근거 | 웹 (시장 리포트·도입 사례·지원 프레임워크) | 논문 실험 결과 (웹은 D4 보강·fallback) |
-| 웹 검색어 | 기술별 `market` · `search` · `ecosystem` (`app.py`) | 기술별 `search` |
-| 출력 키 · 출처 번호 | `market_eval` · `WM*` | `domain_eval` · `WD*` |
-
-**⚖️ 평가 종합 `synthesis`**
-```mermaid
-flowchart LR
-    IN["tech_profiles<br/>market_eval · domain_eval"] --> GEN["Synthesis 생성 (G)<br/>새 사실 생성 금지 · 출처 태그 유지<br/>우열·추천 판단 금지"]
-    GEN --> OUT["synthesis<br/>일치 · 상충(주제/대상/시장/도메인/엇갈리는 이유)<br/>기술 간 인식 차이 · 보완 가능성 · 유의점"]
-```
-
-**📝 보고서 생성 `report_writer`**
-```mermaid
-flowchart TD
-    IN["기술 · 도메인 · 프로필 · 평가 · 종합 · sources"] --> TB["등급 표 생성<br/>평가 결과 그대로 4.1 · 4.2 표"]
-    IN --> PR["보고서 프롬프트<br/>목차 고정 · 2장 Human 선정 문장 · 6장 확증편향 7항목<br/>금칙어 · 사용 가능한 출처 태그 목록"]
-    TB --> PR
-    IN --> RVQ{"검토 반려 후<br/>재작성인가?"}
-    RVQ -- "예" --> RS["이전 보고서 번호 인용 → 태그 복원<br/>+ critical · minor 지적 첨부"]
-    RS --> PR
-    PR --> GEN["본문 초안 작성 (G)<br/>문장마다 출처 태그 인용"]
-    GEN --> FC["인용 변환<br/>태그 → 번호, 인용된 출처만 REFERENCE<br/>논문 → 특허 → 기타 소제목"]
-    FC --> OUT["report_md · revision_count"]
-```
-
-**✅ 보고서 검토 `report_reviewer`**
-```mermaid
-flowchart TD
-    IN["report_md · sources · 평가 결과"] --> R1["목차 · 첫 장 SUMMARY · 끝 장 REFERENCE"]
-    IN --> R2["SUMMARY 900자 이내 · PDF 실제 렌더링 10쪽 이내"]
-    IN --> R3["우열·추천 금칙어"]
-    IN --> R4["미등록 · 형식 오류 출처 태그"]
-    IN --> R5["인용 수치가 논문 페이지 원문에 있는가"]
-    IN --> JD["LLM-as-a-Judge (J, Generator 와 다른 모델)<br/>상충 명시 · 출처-주장 일치 · 저자 보고 기준 구분<br/>SUMMARY 성격 · 제외 관점 혼입 · 등급 일치"]
-    R1 --> RV["review: passed · critical · minor · pages"]
-    R2 --> RV
-    R3 --> RV
-    R4 --> RV
-    R5 --> RV
-    JD --> RV
-    RV --> BR{"route_review"}
-    BR -- "critical 없음" --> A["approve → save_outputs"]
-    BR -- "critical 있음 · 재작성 2회 미만" --> V["revise → report_writer"]
-    BR -- "재작성 한도 도달" --> U["unverified → save_outputs"]
-```
-
-**💾 저장 `save_outputs`** (에이전트 아님, 단순 I/O)
-```mermaid
-flowchart LR
-    IN["report_md · review · trace · sources"] --> C{"검토 통과?"}
-    C -- "아니오" --> W["보고서 상단에<br/>검토 미통과 표시"]
-    W --> P["PDF 렌더링 (WeasyPrint)"]
-    C -- "예" --> P
-    P --> OUT["outputs/<br/>report.md · RAG-Output_*.pdf<br/>review.md · trace.json"]
-```
 
 ### State
 | Key | Type | Reducer | 작성 노드 | 설명 |
