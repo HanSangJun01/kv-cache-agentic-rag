@@ -163,14 +163,14 @@ SUMMARY(½쪽 이내) → 1. 분석 배경 → 2. 기술 선정(Human 기반 직
 | 규칙 | 미등록·형식 오류 출처 태그, 논문 인용 문장 수치의 원문 존재 여부 | critical |
 | Judge | 상충 지점 명시, 수치 출처, "저자 보고 기준" 구분, SUMMARY 가 결과 요약인지, 출처-주장 일치, 제외 관점(이해관계자·TRL) 혼입 | critical / minor |
 
-## Results (최근 `python app.py` 1회 실행, 약 3분)
-- 보고서: `outputs/RAG-Output_*.pdf` **5쪽** (SUMMARY → 1~6장 → REFERENCE), 검토 **approve**(재작성 0회) — `outputs/review.md`
-- Agentic RAG: 논문 질의 24건 중 1건이 관련 근거 0 → 질의 재작성 후 재검색으로 근거 확보, 웹 질의 16건(채택·한계 쌍)
-- 출처: 레지스트리 46건 중 **본문에 실제 인용된 21건만** REFERENCE 로 출력
-- Reflection: 6회(3 에이전트 × 2 기술)에서 23건 지적 → 수정 (개발 중 실행 예: 비교 대상 오기 "MHA 대비 93.3%" → 원문은 "DeepSeek 67B 대비", 루브릭과 어긋난 등급 교정)
+## Results (저장소 `outputs/` 기준, `python app.py` 1회 실행)
+- 보고서: `outputs/RAG-Output_판교_9반_한상준.pdf` **6쪽** (SUMMARY → 1~6장 → REFERENCE), 검토 **approve**(재작성 0회) — `outputs/review.md`
+- Agentic RAG: 논문 질의 24건 모두 첫 검색에서 관련 근거 확보(질의 재작성 0건), 웹 질의 16건(채택·한계 쌍). 관련 근거가 0건일 때의 재작성 분기는 개발 중 실행에서 2~3건 동작을 확인함 (재작성 이력은 `trace.json` 의 `attempts` 에 기록)
+- 출처: 레지스트리 45건 중 **본문에 실제 인용된 20건만** REFERENCE 로 출력 (논문 2 · 기타 18, 인용이 없는 특허 소제목은 생략)
+- Reflection: 6회(3 에이전트 × 2 기술)에서 10건 지적 → 수정 (예: 비교 대상 오기 "기존 MHA 대비 93.3%" → 원문은 "DeepSeek 67B 대비", 루브릭과 어긋난 등급 교정)
 - 검토 Loop 동작 이력: 초기 버전에서는 critical 이 남아 `revise → revise → unverified` 로 종료되고, 이때도 PDF 상단에 미통과 표시와 함께 생성됨을 확인
 - `outputs/graph.mmd` 는 코드에서 추출한 그래프. `approve` 와 `unverified` 가 같은 `save_outputs` 로 가서 그림에서는 한 선으로 합쳐 표시됨 (코드는 3갈래 매핑)
-- LLM 출력은 매 실행 달라질 수 있으나 구조·규칙 검사·REFERENCE 생성은 동일하게 재현됨
+- LLM·웹 검색 결과는 실행마다 달라질 수 있어 쪽수·출처 수·등급은 변동될 수 있으나, 그래프 구조·규칙 검사·REFERENCE 생성 방식은 동일하게 재현됨
 
 ## Directory Structure
 ```
